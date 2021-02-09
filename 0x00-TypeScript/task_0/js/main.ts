@@ -22,12 +22,13 @@ const studentTwo: Student = {
 const studentsList: Array<Student> = [studentOne, studentTwo];
 const labels: string[] = ['firstName', 'location'];
 
-let body: HTMLBodyElement = document.getElementsByTagName('body')[0];
 let table: HTMLTableElement = document.createElement('table');
 let tbody: HTMLTableSectionElement = document.createElement('tbody');
 let thead: HTMLTableSectionElement = document.createElement('thead');
 
+document.body.appendChild(table);
 table.appendChild(thead);
+table.appendChild(tbody);
 
 // for (let i: number = 0; i < labels.length; i++) {
 	// let th: HTMLTableCellElement = document.createElement('th');
@@ -48,5 +49,3 @@ for (let i :number = 0; i < studentsList.length; i++) {
 		tr.appendChild(td);
 	}
 }
-table.appendChild(tbody);
-body.appendChild(table);
