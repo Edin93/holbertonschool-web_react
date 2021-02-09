@@ -22,9 +22,9 @@ let studentTwo: Student = {
 let studentsList: Student[] = [studentOne, studentTwo];
 
 function callback() {
-	let body: any = document.getElementsByTagName('body')[0];
-	let table: any = document.createElement('table');
-	let tbody: any = document.createElement('tbody');
+	let body: HTMLBodyElement = document.getElementsByTagName('body')[0];
+	let table: HTMLTableElement = document.createElement('table');
+	let tbody: HTMLTableSectionElement = document.createElement('tbody');
 
 	table.appendChild(tbody);
 
