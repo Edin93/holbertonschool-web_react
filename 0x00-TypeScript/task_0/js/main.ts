@@ -30,13 +30,11 @@ document.body.appendChild(table);
 table.appendChild(thead);
 table.appendChild(tbody);
 
-// for (let i: number = 0; i < labels.length; i++) {
-	// const th: HTMLTableCellElement = document.createElement('th');
-	// th.appendChild(document.createTextNode(`${labels[i]}`));
-	// thead.appendChild(th);
-// }
-
-thead.innerHTML = '<tr><th>firstName</th><th>location</th></tr>';
+for (let i: number = 0; i < labels.length; i++) {
+	const th: HTMLTableCellElement = document.createElement('th');
+	th.appendChild(document.createTextNode(`${labels[i]}`));
+	thead.appendChild(th);
+}
 
 for (let i :number = 0; i < studentsList.length; i++) {
 	const tr: HTMLTableRowElement = document.createElement('tr');
