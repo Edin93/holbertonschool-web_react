@@ -20,13 +20,22 @@ let studentTwo: Student = {
 }
 
 let studentsList: Student[] = [studentOne, studentTwo];
+let labels: string[] = ['firstName', 'location'];
 
 function callback() {
 	let body: HTMLBodyElement = document.getElementsByTagName('body')[0];
 	let table: HTMLTableElement = document.createElement('table');
 	let tbody: HTMLTableSectionElement = document.createElement('tbody');
+	let thead: HTMLTableSectionElement = document.createElement('thead');
 
+	table.appendChild(thead);
 	table.appendChild(tbody);
+
+	for (let i: number = 0; i < labels.length; i++) {
+		let th: HTMLTableCellElement = document.createElement('th');
+		th.appendChild(document.createTextNode(`${labels[i]}`));
+		thead.appendChild(th);
+	}
 
 	for (let i :number = 0; i < studentsList.length; i++) {
 		let tr: HTMLTableRowElement = document.createElement('tr');
