@@ -15,10 +15,6 @@ interface printTeacherFunction {
 	(firstName: string, lastName: string): string;
 }
 
-let printTeacher = function (firstName: string, lastName: string): string {
-	if (firstName && lastName) {
-		return `${firstName[0]}. ${lastName}`;
-	} else {
-		return ``
-	}
+let printTeacher: printTeacherFunction = function (firstName: string, lastName: string): string {
+	return `${firstName[0]}. ${lastName}`;
 }
