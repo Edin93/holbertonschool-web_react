@@ -5,22 +5,22 @@ interface Student {
 	location: string,
 }
 
-let studentOne: Student = {
+const studentOne: Student = {
 	firstName: 'James',
 	lastName: 'Joyce',
 	age: 90,
 	location: 'Europe'
 }
 
-let studentTwo: Student = {
+const studentTwo: Student = {
 	firstName: 'Jordan',
 	lastName: 'Peterson',
 	age: 57,
 	location: 'Canada'
 }
 
-let studentsList: Student[] = [studentOne, studentTwo];
-let labels: string[] = ['firstName', 'location'];
+const studentsList: Array<Student> = [studentOne, studentTwo];
+const labels: string[] = ['firstName', 'location'];
 
 function callback() {
 	let body: HTMLBodyElement = document.getElementsByTagName('body')[0];
@@ -29,7 +29,6 @@ function callback() {
 	let thead: HTMLTableSectionElement = document.createElement('thead');
 
 	table.appendChild(thead);
-	table.appendChild(tbody);
 
 	// for (let i: number = 0; i < labels.length; i++) {
 		// let th: HTMLTableCellElement = document.createElement('th');
@@ -50,6 +49,7 @@ function callback() {
 			tr.appendChild(td);
 		}
 	}
+	table.appendChild(tbody);
 	body.appendChild(table);
 }
 
