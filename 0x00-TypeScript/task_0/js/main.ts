@@ -31,11 +31,13 @@ function callback() {
 	table.appendChild(thead);
 	table.appendChild(tbody);
 
-	for (let i: number = 0; i < labels.length; i++) {
-		let th: HTMLTableCellElement = document.createElement('th');
-		th.appendChild(document.createTextNode(`${labels[i]}`));
-		thead.appendChild(th);
-	}
+	// for (let i: number = 0; i < labels.length; i++) {
+		// let th: HTMLTableCellElement = document.createElement('th');
+		// th.appendChild(document.createTextNode(`${labels[i]}`));
+		// thead.appendChild(th);
+	// }
+
+	thead.innerHTML = '<tr><th>firstName</th><th>location</th></tr>';
 
 	for (let i :number = 0; i < studentsList.length; i++) {
 		let tr: HTMLTableRowElement = document.createElement('tr');
