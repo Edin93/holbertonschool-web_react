@@ -23,12 +23,15 @@ export const printTeacher: printTeacherFunction = function (
 }
 
 interface StudentClassInterface {
-	// new (firstName: string, lastName: string);
 	firstName: string;
 	lastName: string;
 
-	workOnHomework: () => string;
-	displayName: () => string;
+	workOnHomework(): string;
+	displayName(): string;
+}
+
+interface StudentClassConstructor {
+	new (firstName: string, lastName: string): StudentClass;
 }
 
 class StudentClass implements StudentClassInterface {
@@ -45,6 +48,6 @@ class StudentClass implements StudentClassInterface {
 	}
 
 	displayName() {
-		return this.firstName;
+		return `${this.firstName}`;
 	}
 }
