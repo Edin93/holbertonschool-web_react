@@ -29,12 +29,12 @@ function callback() {
 	table.appendChild(tbody);
 
 	for (let i :number = 0; i < studentsList.length; i++) {
-		let tr: any = document.createElement('tr');
+		let tr: HTMLTableRowElement = document.createElement('tr');
 		tbody.appendChild(tr);
 		let values: string[] = [studentsList[i].firstName, studentsList[i].location]
 
 		for (let j :number = 0; j < values.length; j++) {
-			let td = document.createElement('td');
+			let td: HTMLTableCellElement = document.createElement('td');
 			td.appendChild(document.createTextNode(`${values[j]}`));
 			tr.appendChild(td);
 		}
