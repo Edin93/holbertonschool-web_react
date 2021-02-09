@@ -15,7 +15,7 @@ interface printTeacherFunction {
 	(firstName: string, lastName: string): string;
 }
 
-let printTeacher: printTeacherFunction = function (
+const printTeacher: printTeacherFunction = function (
 	firstName: string,
 	lastName: string
 ): string {
