@@ -42,11 +42,5 @@ function callback() {
 	body.appendChild(table);
 }
 
-if (
-	document.readyState === "complete" ||
-	(document.readyState !== "loading" && !document.documentElement.scroll)
-) {
-	callback();
-} else {
-	document.addEventListener("DOMContentLoaded", callback);
-}
+callback();
+
