@@ -54,5 +54,5 @@ export {
 	StudentClass
 }
 
-let obj = new StudentClass('Jordan', 'Peterson');
+const obj:StudentClassInterface = new StudentClass('Jordan', 'Peterson');
 console.log(obj);
