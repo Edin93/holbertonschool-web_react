@@ -22,10 +22,6 @@ const printTeacher: printTeacherFunction = function (
 	return `${firstName[0]}. ${lastName}`;
 }
 
-// interface StudentConstructor {
-// 	new (firstName: string, lastName: string): StudentClassInterface;
-// }
-
 interface StudentConstructor {
 	new (firstName: string, lastName: string): StudentClassInterface;
 }
@@ -58,5 +54,5 @@ export {
 	StudentClass
 }
 
-// let obj = new StudentClass('Jordan', 'Peterson');
-// console.log(obj);
+let obj = new StudentClass('Jordan', 'Peterson');
+console.log(obj);
