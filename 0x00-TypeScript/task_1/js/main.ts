@@ -15,7 +15,7 @@ interface printTeacherFunction {
 	(firstName: string, lastName: string): string;
 }
 
-export const printTeacher: printTeacherFunction = function (
+const printTeacher: printTeacherFunction = function (
 	firstName: string,
 	lastName: string
 ): string {
@@ -27,7 +27,7 @@ export const printTeacher: printTeacherFunction = function (
 // }
 
 interface StudentConstructor {
-	new (firstName: '', lastName: ''): StudentClassInterface;
+	new (firstName: string, lastName: string): StudentClassInterface;
 }
 
 interface StudentClassInterface {
@@ -51,6 +51,11 @@ const StudentClass: StudentConstructor = class StudentClass implements StudentCl
 	displayName() {
 		return `${this.firstName}`;
 	}
+}
+
+export {
+	printTeacher,
+	StudentClass
 }
 
 // let obj = new StudentClass('Jordan', 'Peterson');
