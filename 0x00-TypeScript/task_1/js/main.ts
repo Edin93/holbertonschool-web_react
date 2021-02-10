@@ -23,7 +23,7 @@ const printTeacher: printTeacherFunction = function (
 }
 
 interface StudentConstructor {
-	new (firstName: string, lastName: string): StudentClassInterface;
+	new(firstName: string, lastName: string): StudentClassInterface;
 }
 
 interface StudentClassInterface {
