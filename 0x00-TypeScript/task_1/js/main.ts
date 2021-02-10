@@ -25,9 +25,6 @@ export const printTeacher: printTeacherFunction = function (
 interface StudentClassInterface {
 	firstName: string;
 	lastName: string;
-
-	workOnHomework(): string;
-	displayName(): string;
 }
 
 interface StudentClassConstructor {
@@ -43,11 +40,11 @@ class StudentClass implements StudentClassInterface {
 		this.lastName = lastName;
 	}
 
-	workOnHomework() {
+	workOnHomework(): string {
 		return 'Currently working';
 	}
 
-	displayName() {
+	displayName(): string {
 		return `${this.firstName}`;
 	}
 }
