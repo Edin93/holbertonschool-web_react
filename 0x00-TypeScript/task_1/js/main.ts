@@ -31,7 +31,7 @@ interface StudentClassInterface {
 	displayName(): string;
 }
 
-export const StudentClassConstructor = class StudentClass implements StudentClassInterface {
+export const StudentClass: StudentClassConstructor = class StudentClass implements StudentClassInterface {
 	firstName: string;
 	lastName: string;
 
@@ -49,20 +49,5 @@ export const StudentClassConstructor = class StudentClass implements StudentClas
 	}
 }
 
-// class StudentClass implements StudentClassInterface {
-// 	firstName: string;
-// 	lastName: string;
-
-// 	constructor (firstName: string, lastName: string) {
-// 		this.firstName = firstName;
-// 		this.lastName = lastName;
-// 	}
-
-// 	workOnHomework() {
-// 		return 'Currently working';
-// 	}
-
-// 	displayName() {
-// 		return `${this.firstName}`;
-// 	}
-// }
+// let obj = new StudentClass('Jordan', 'Peterson');
+// console.log(obj);
