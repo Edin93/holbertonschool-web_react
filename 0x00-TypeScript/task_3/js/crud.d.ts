@@ -1,13 +1,13 @@
-import { RowElement, RowID } from "./interface";
+import { RowElement, RowID } from './interface';
 
-type insertRowFunc = (row: RowElement) => RowID;
+type insertRow = (row: RowElement) => number;
 
-type deleteRowFunc = (rowId: RowID) => void;
+type deleteRow = (rowId: RowID) => void;
 
-type updateRowFunc = (rowId: RowID, row: RowElement) => RowID;
+type updateRow = (rowId: RowID, row: RowElement) => number;
 
 export {
-	insertRowFunc,
-	deleteRowFunc,
-	updateRowFunc,
+	insertRow,
+	deleteRow,
+	updateRow,
 }

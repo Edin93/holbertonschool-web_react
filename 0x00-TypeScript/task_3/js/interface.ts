@@ -1,4 +1,4 @@
-type RowID = 'number';
+type RowID = number;
 
 interface RowElement {
 	firstName: string;
