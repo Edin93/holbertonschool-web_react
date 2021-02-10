@@ -22,8 +22,12 @@ export const printTeacher: printTeacherFunction = function (
 	return `${firstName[0]}. ${lastName}`;
 }
 
+// interface StudentConstructor {
+// 	new (firstName: string, lastName: string): StudentClassInterface;
+// }
+
 interface StudentConstructor {
-	new (firstName: string, lastName: string): StudentClassInterface;
+	new (firstName: '', lastName: ''): StudentClassInterface;
 }
 
 interface StudentClassInterface {
