@@ -1,5 +1,5 @@
 namespace Subjects {
-	export interface Teacher {
+	export interface TeacherInterface {
 		experienceTeachingC?: number;
 	}
 
