@@ -1,8 +1,8 @@
-export const cpp = new Subjects.Cpp();
-export const java = new Subjects.Java();
-export const react = new Subjects.React();
+const cpp = new Subjects.Cpp();
+const java = new Subjects.Java();
+const react = new Subjects.React();
 
-export let cTeacher = {
+let cTeacher = {
 	firstName: 'Pablo',
 	lastName: 'Escobar',
 	experienceTeachingC: 10,
@@ -22,3 +22,10 @@ console.log('React');
 react.setTeacher = cTeacher;
 console.log(react.getRequirements());
 console.log(react.getAvailableTeacher());
+
+export {
+	cpp,
+	java,
+	react,
+	cTeacher,
+}
