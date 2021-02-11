@@ -21,5 +21,3 @@ $(function() {
 	});
 	$('button').on('click', debouncedFunc);
 });
-
-// Bind the debounce function in Lodash to the click event on the button you created previously.
