@@ -1,15 +1,11 @@
 import $ from 'jquery';
-import { _debounce } from 'lodash';
+import { debounce } from 'lodash';
+
+let count = 0;
 
 function updateCounter() {
-	let btn = document.getElementsByTagName('button');
-	let p = document.getElementById('count');
-	let count = 0;
-
-	btn.click(function() {
-		count += 1;
-		$(p).text(`${count} clicks on the button`);
-	});
+	count += 1;
+	return count;
 }
 
 $(function() {
@@ -19,5 +15,11 @@ $(function() {
 	$('body').append("<p id='count'></p>");
 	$('body').append('<p>Copyright - Holberton School</p>');
 
-	$('button').on('click', _debounce(updateCounter));
+	let debouncedFunc = debounce(() => {
+		let count = updateCounter();
+		$('#count').text(`${count} clicks on the button`);
+	});
+	$('button').on('click', debouncedFunc);
 });
+
+// Bind the debounce function in Lodash to the click event on the button you created previously.
