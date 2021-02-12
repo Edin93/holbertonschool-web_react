@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 
 let count = 0;
 
@@ -15,7 +15,7 @@ $(function() {
 	$('body').append("<p id='count'></p>");
 	$('body').append('<p>Copyright - Holberton School</p>');
 
-	let debouncedFunc = debounce(() => {
+	let debouncedFunc = _.debounce(() => {
 		let count = updateCounter();
 		$('#count').text(`${count} clicks on the button`);
 	});
