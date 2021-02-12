@@ -4,19 +4,19 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	entry: {
-		lodash: './node_modules/lodash',
-		jquery: './node_modules/jquery',
+		// lodash: './node_modules/lodash',
+		// jquery: './node_modules/jquery',
 		header: {
 			import: './modules/header/header.js',
 		},
 		body: {
 			import: './modules/body/body.js',
-			dependOn: 'jquery',
+			// dependOn: 'jquery',
 		},
 		footer: {
 			import: './modules/footer/footer.js',
 		},
-		shared: 'lodash',
+		// shared: 'lodash',
 	},
 	output: {
 		path: path.resolve(__dirname, './public'),
@@ -42,7 +42,7 @@ module.exports = {
 	},
 	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: 'public',
+		contentBase: './public',
 		port: 8564,
 	},
 	mode: 'development',
