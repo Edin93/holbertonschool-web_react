@@ -3,21 +3,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+	// entry: {
+	// 	// lodash: './node_modules/lodash',
+	// 	// jquery: './node_modules/jquery',
+	// 	header: {
+	// 		import: './modules/header/header.js',
+	// 	},
+	// 	body: {
+	// 		import: './modules/body/body.js',
+	// 		// dependOn: 'jquery',
+	// 	},
+	// 	footer: {
+	// 		import: './modules/footer/footer.js',
+	// 	},
+	// 	// shared: 'lodash',
+	// },
 	entry: {
-		// lodash: './node_modules/lodash',
-		// jquery: './node_modules/jquery',
-		header: {
-			import: './modules/header/header.js',
-		},
-		body: {
-			import: './modules/body/body.js',
-			// dependOn: 'jquery',
-		},
-		footer: {
-			import: './modules/footer/footer.js',
-		},
-		// shared: 'lodash',
-	},
+    all: ["./modules/header/header.js", "./modules/body/body.js", "./modules/footer/footer.js"],
+  },
 	output: {
 		path: path.resolve(__dirname, './public'),
 		filename: '[name].bundle.js',
