@@ -19,7 +19,7 @@ module.exports = {
 		shared: 'lodash',
 	},
 	output: {
-		path: path.resolve(__dirname, 'public'),
+		path: path.resolve(__dirname, './public'),
 		filename: '[name].bundle.js',
 	},
 	plugins: [
