@@ -42,7 +42,7 @@ module.exports = {
 	},
 	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: './public',
+		contentBase: 'public',
 		port: 8564,
 	},
 	mode: 'development',
