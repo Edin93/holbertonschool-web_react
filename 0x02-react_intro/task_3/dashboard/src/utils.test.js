@@ -6,8 +6,11 @@ describe("Utils functions", () => {
 		expect(getFullYear()).toEqual(2021);
 	});
 
-	test("getFooterCopy returns the correct string when the arg is true or false", () => {
+	test("getFooterCopy returns the correct string when the argument is true", () => {
 		expect(getFooterCopy(true)).toEqual("Holberton School");
+	});
+
+	test("getFooterCopy returns the correct string when the argument is false", () => {
 		expect(getFooterCopy(false)).toEqual("Holberton School main dashboard");
 	});
 
