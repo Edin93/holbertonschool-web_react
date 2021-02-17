@@ -1,8 +1,7 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://edin93.github.io/holbertonschool-web_react",
+  "homepage": "https://edin93.github.io/holbertonschool-web_react/task_4/dashboard",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
