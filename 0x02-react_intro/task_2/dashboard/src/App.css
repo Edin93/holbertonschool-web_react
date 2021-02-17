@@ -28,8 +28,12 @@ div {
   color: var(--holberton-red);
 }
 
-.App-body p {
-  margin: 48px 0 0 32px;
+.App-body {
+  padding: 36px 24px;
+}
+
+.App-body input {
+  margin: 0 16px 0 8px;
 }
 
 .App-footer {
