@@ -24,7 +24,11 @@ function Notifications() {
 					console.log('Close button has been clicked');
 				}}
 			>
-				<img src={closeIcon} alt="close icon" />
+				<img
+					src={closeIcon}
+					// src="../assets/close-icon.png"
+					alt="close icon"
+				/>
 			</button>
 			<p>
 				Here is the list of notifications

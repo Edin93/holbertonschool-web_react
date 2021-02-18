@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App/App';
 import Notifications from './Notifications/Notifications';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -17,10 +16,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root-notifications')
 );
-
-// ReactDOM.render(
-//   <div>
-//     <h1>HELLO WORLD</h1>
-//   </div>,
-//   document.getElementById('root')
-// );
