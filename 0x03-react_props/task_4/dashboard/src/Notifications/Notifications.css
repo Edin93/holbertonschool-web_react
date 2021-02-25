@@ -5,6 +5,11 @@
 	margin-top: 12px;
 }
 
+.menuItem {
+	text-align: right;
+	font-weight: bold;
+}
+
 li[data-priority-type="default"] {
 	color: blue;
 }

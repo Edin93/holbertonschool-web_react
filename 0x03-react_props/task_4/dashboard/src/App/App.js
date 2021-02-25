@@ -15,9 +15,11 @@ class App extends Component {
   
     return (
       <Fragment>
-        <Notifications />
         <div className="App">
-          <Header />
+          <div className="upperside">
+            <Notifications />
+            <Header />
+          </div>
           {
             isLoggedIn === false &&
             <Login />
