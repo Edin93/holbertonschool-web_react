@@ -5,10 +5,15 @@
 	margin-top: 12px;
 }
 
-li[data-priority="default"] {
+.menuItem {
+	text-align: right;
+	font-weight: bold;
+}
+
+li[data-priority-type="default"] {
 	color: blue;
 }
 
-li[data-priority="urgent"] {
+li[data-priority-type="urgent"] {
 	color: red;
 }

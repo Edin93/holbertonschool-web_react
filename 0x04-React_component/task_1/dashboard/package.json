@@ -11,6 +11,7 @@
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^7.0.1",
     "imagemin-gifsicle": "^7.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-test-renderer": "^17.0.1",
@@ -26,7 +27,6 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/preset-env": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
     "babel-loader": "^8.2.2",

@@ -11,13 +11,16 @@
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^7.0.1",
     "imagemin-gifsicle": "^7.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-test-renderer": "^17.0.1",
     "style-loader": "^2.0.0"
   },
   "scripts": {
     "start": "webpack serve --mode development --config config/webpack.config.js",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "keywords": [],
   "author": "",

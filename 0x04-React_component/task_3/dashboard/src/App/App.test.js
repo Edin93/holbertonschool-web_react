@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import Notifications from '../Notifications/Notifications';
+import CourseList from '../CourseList/CourseList';
 
 configure({adapter: new Adapter()});
 
@@ -23,7 +24,7 @@ describe("Testing the <App /> Component", () => {
 	});
 
 	it("<App /> contains the <Notifications /> Component", () => {
-		expect(wrapper.contains(<Notifications />)).to.equal(true);
+		expect(wrapper.find(Notifications)).to.have.lengthOf(1);
 	});
 
 	it("<App /> contains the <Header /> Component", () => {
@@ -38,16 +39,32 @@ describe("Testing the <App /> Component", () => {
 		expect(wrapper.contains(<Footer />)).to.equal(true);
 	});
 
-	test('logOut alerts with correct string', () => {
-    const myLogOut = jest.fn(() => undefined);
-    const appComp = mount(<App logOut={myLogOut} />);
-		const log = jest.spyOn(console, 'log');
+	it("<App /> doesn't contain <CourseList />", () => {
+		expect(wrapper.find(CourseList)).to.have.lengthOf(0);
+	});
 
-		expect(appComp.props.logOut);
-		expect(log);
+});
 
-		jest.restoreAllMocks();
+describe("Testing the <App /> when isLoggedIn is true", () => {
 
-  });
+	let props = {
+		isLoggedIn: true,
+	};
+
+	let component = shallow(<App {...props} />);
+
+	expect(component.contains(<Login />)).to.equal(false);
+	expect(component.find(CourseList)).to.have.lengthOf(1);
+});
+
+describe('logOut alerts with correct string', () => {
+	const myLogOut = jest.fn(() => undefined);
+	const appComp = mount(<App logOut={myLogOut} />);
+	const log = jest.spyOn(console, 'log');
+
+	expect(appComp.props.logOut);
+	expect(log);
+
+	jest.restoreAllMocks();
 
 });
