@@ -17,7 +17,7 @@ class App extends Component {
     let k = e.key;
     if ((e.metaKey || e.ctrlKey) && k === 'h') {
       e.preventDefault();
-      console.log('Logging you out');
+      alert('Logging you out');
       this.props.logout();
     }
   }
@@ -53,7 +53,7 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  logout: () => { return undefined },
+  logout: () => {},
 };
 
 export default App;
