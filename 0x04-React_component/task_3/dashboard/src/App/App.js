@@ -11,6 +11,7 @@ import { getLatestNotification } from '../utils/utils';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.ctrlHEventHandler = this.ctrlHEventHandler.bind(this);
   }
 
   ctrlHEventHandler(e) {
