@@ -5,6 +5,7 @@ import Login from '../Login/Login.js';
 import Footer from '../Footer/Footer.js';
 import Notifications from '../Notifications/Notifications.js';
 import PropTypes from 'prop-types';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom.js';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +41,11 @@ class App extends Component {
         <Notifications />
         <div className="App">
           <Header />
+          <BodySectionWithMarginBottom title="TEST TITLE">
+            <p>TEST Paragraph I</p>
+            <p>TEST Paragraph II</p>
+            <p>TEST Paragraph III</p>
+          </BodySectionWithMarginBottom>
           <Login />
           <Footer />
         </div>
