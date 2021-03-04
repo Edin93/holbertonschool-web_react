@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
-import { shallow, configure } from 'enzyme';
+import { shallow, configure, mount } from 'enzyme';
 import App from './App';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -37,5 +37,17 @@ describe("Testing the <App /> Component", () => {
 	it("<App /> contains the <Footer /> Component", () => {
 		expect(wrapper.contains(<Footer />)).to.equal(true);
 	});
+
+	test('logOut alerts with correct string', () => {
+    const myLogOut = jest.fn(() => undefined);
+    const appComp = mount(<App logOut={myLogOut} />);
+		const log = jest.spyOn(console, 'log');
+
+		expect(appComp.props.logOut);
+		expect(log);
+
+		jest.restoreAllMocks();
+
+  });
 
 });
