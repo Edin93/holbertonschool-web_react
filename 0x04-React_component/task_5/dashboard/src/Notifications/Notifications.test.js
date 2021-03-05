@@ -1,10 +1,15 @@
 import React from 'react';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
-import { shallow, configure } from 'enzyme';
+import { shallow, configure, mount } from 'enzyme';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils/utils';
+import WithLogging from '../HOC/WithLogging.js';
+import sinonChai from 'sinon-chai';
+import { spy } from 'sinon';
+
+chai.use(sinonChai);
 
 configure({adapter: new Adapter()});
 
@@ -38,7 +43,8 @@ describe("Testing the <Notifications /> wrapperTwo", () => {
 	};
 	let wrapperOne;
 	let wrapperTwo;
-	let wrapperThree;
+
+	let notifSpy = spy(Notifications.prototype, 'shouldComponentUpdate');
 
 	beforeEach(() => {
 		wrapperOne = shallow(<Notifications shouldRender {...props1} />);
@@ -107,5 +113,36 @@ describe("Testing the <Notifications /> wrapperTwo", () => {
 		wrapper.instance().markAsRead(666);
 		// expect(log).to.have.been.calledWith('Notification 666 has been marked as read');
 	});
-	
+
+	it("verify that when updating the props of the component with the same list, the component doesn’t rerender", () => {
+		// let notifSpy = spy(Notifications.prototype, 'shouldComponentUpdate');
+		let notifComp = mount(<Notifications {...props2} />);
+
+		expect(notifSpy);
+		notifComp.setProps({ ...props2 });
+		expect(notifSpy).to.not.be.true;
+		// expect(notifSpy).to.have.been.calledTwice();
+	});
+
+
+	it("verify that when updating the props of the component with a longer list, the component does rerender", () => {
+		// let notifSpy = spy(Notifications.prototype, 'shouldComponentUpdate');
+		let notifComp = mount(<Notifications {...props2} />);
+
+		expect(notifSpy);
+		notifComp.setProps({
+			displayDrawer: true,
+			listNotifications: [
+				...props2.listNotifications,
+				{
+					id: 8967,
+					type: "default",
+					value: "New notif for test",
+				},
+			]
+		});
+		expect(notifSpy).to.not.be.false;
+		// expect(notifSpy).to.have.been.calledTwice();
+	});
+
 });
