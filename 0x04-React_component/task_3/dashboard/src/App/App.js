@@ -7,6 +7,8 @@ import Footer from '../Footer/Footer.js';
 import Notifications from '../Notifications/Notifications.js';
 import CourseList from '../CourseList/CourseList';
 import { getLatestNotification } from '../utils/utils';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom.js';
+import BodySection from '../BodySection/BodySection.js';
 
 class App extends Component {
   constructor(props) {
@@ -88,12 +90,22 @@ class App extends Component {
           </div>
           {
             isLoggedIn === false &&
-            <Login />
+            <BodySectionWithMarginBottom title="Log in to continue">
+              <Login />
+            </BodySectionWithMarginBottom>
           }
           {
             isLoggedIn === true &&
-            <CourseList listCourses={listCourses} />
+            <BodySectionWithMarginBottom title="Course list">
+              <CourseList listCourses={listCourses} />
+            </BodySectionWithMarginBottom>
           }
+          <BodySection title="News from the school">
+            <p>
+              Ipsum anim sunt qui ullamco do consequat reprehenderit
+              aliqua fugiat proident amet duis.
+            </p>
+          </BodySection>
           <Footer />
         </div>
       </Fragment>
