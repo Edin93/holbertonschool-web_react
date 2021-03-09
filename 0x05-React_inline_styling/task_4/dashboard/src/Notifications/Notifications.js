@@ -94,6 +94,33 @@ class Notifications extends Component {
 	};
 };
 
+// Create one object containing the CSS frames to make the opacity change from 0.5 to 1
+// bounce. You can play with translateY and alternate from 0px to -5px and 5px
+
+const opacityFrame = {
+	'0%': {
+		opacity: .5,
+	},
+	'50%': {
+		opacity: .75,
+	},
+	'100%': {
+		opacity: 1,
+	},
+};
+
+const bounceFrame = {
+	'0%': {
+		transform: 'translateY(0)',
+	},
+	'50%': {
+			transform: 'translateY(-10px)',
+	},
+	'100%': {
+			transform: 'translateY(0)',
+	},
+};
+
 const styles = StyleSheet.create({
 	notifications: {
 		border: `2px dotted var(--holberton-red)`,
@@ -101,17 +128,29 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		marginTop: '12px',
 		fontSize: '20px',
+		position: 'absolute !important',
+		top: '-2px',
+		right: '0',
+		left: '0',
+		background: '#fff8f8',
 		'@media (max-width: 900px)': {
 			position: 'absolute !important',
 			top: '0',
 			right: '0',
 			left: '0',
-			background: 'white',
+			background: '#fff8f8',
 		},
 	},
 	menuItem: {
 		textAlign: 'right',
 		fontWeight: 'bold',
+		pointer: 'cursor',
+		background: '#fff8f8',
+		':hover': {
+			animationName: [opacityFrame, bounceFrame],
+			animationDuration: '1s, .5s',
+			animationIterationCount: '3',
+		}
 	},
 	// globals: {
 	// 	'*ul': {
