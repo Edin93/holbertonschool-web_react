@@ -3,11 +3,13 @@
     "lint": "./node_modules/.bin/eslint",
     "check-lint": "lint [0-9]*.js",
     "test": "jest",
-    "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest"
+    "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest",
+    "dev": "npx babel-node"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.6.0",
+    "@babel/node": "^7.13.10",
     "@babel/preset-env": "^7.6.0",
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^6.4.0",
