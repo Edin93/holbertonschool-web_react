@@ -4,3 +4,5 @@ function getImmutableObject(object) {
 	const immutableObj = fromJS(object);
 	return (immutableObj);
 };
+
+export default getImmutableObject;
