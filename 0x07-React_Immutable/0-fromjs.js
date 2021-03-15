@@ -5,6 +5,4 @@ const getImmutableObject = (object) => {
 	return (immutableObj);
 };
 
-module.exports = {
-	getImmutableObject
-};
+export default getImmutableObject;
