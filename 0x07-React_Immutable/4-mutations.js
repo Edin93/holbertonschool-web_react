@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-const map = Map({
+export const map = Map({
 	1: 'Liam',
 	2: 'Noah',
 	3: 'Elijah',
@@ -9,11 +9,6 @@ const map = Map({
 	6: 'Lucas',
 });
 
-let map2 = map;
-map2 = map2.set(2, 'Benjamin');
-map2 = map2.set(4, 'Oliver');
-
-export {
-	map,
-	map2,
-}
+export const map2 = map.withMutations(item => {
+	item.set('2','Benjamin').set('4','Oliver');
+});
