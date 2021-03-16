@@ -1,4 +1,4 @@
-import { getIn } from 'immutable';
+import Immutable from 'immutable';
 
 export default function accessImmutableObject(object, array) {
 	if (object === null || object === undefined || Object.keys(object).length === 0) {
@@ -7,5 +7,5 @@ export default function accessImmutableObject(object, array) {
 	if (array === null || array === undefined || array.length === 0) {
 		return (undefined);
 	}
-	return getIn(object, array, undefined);
+	return Immutable.getIn(object, array, undefined);
 };
