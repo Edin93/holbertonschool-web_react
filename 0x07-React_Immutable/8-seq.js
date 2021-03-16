@@ -1,20 +1,19 @@
-import { Seq } from "immutable";
+import { Seq } from 'immutable';
 
 export default function printBestStudents(object) {
-  const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };  
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
   let filteredStudents = Seq(object)
     .filter((grade) => grade.score > 70)
     .map((student) => {
-      let editedStudent = {
+      const editedStudent = {
         ...student,
         firstName: capitalize(student.firstName),
         lastName: capitalize(student.lastName),
       };
       return editedStudent;
-    })
-    .toJS();
+    });
+
+  filteredStudents = filteredStudents.toJS();
 
   console.log(filteredStudents);
 }
