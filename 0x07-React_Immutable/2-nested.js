@@ -7,5 +7,5 @@ export default function accessImmutableObject(object, array) {
 	if (array === null || array === undefined || array.length === 0) {
 		return (undefined);
 	}
-	return Immutable.getIn(object, array, undefined);
+	return Immutable.getIn(Immutable.fromJS(object), array, undefined);
 };
