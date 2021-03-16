@@ -1,9 +1,9 @@
-import { List, concat } from 'immutable';
+import { List } from 'immutable';
 
 export function getListObject(array) {
 	return (List(array));
 }
 
 export function addElementToList(list, element) {
-	return (concat(getListObject(list), element));
+	return (getListObject(list).concat(element));
 }
