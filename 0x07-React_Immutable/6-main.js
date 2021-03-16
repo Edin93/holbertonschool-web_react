@@ -1,4 +1,5 @@
-import { mergeDeeplyElements, } from './6-deeply';
+import mergeDeeplyElements from './6-deeply';
+// import accessImmutableObject from './2-nested';
 
 const page1 = {
   'user-1': {
@@ -7,8 +8,8 @@ const page1 = {
     likes: {
       1: {
         uid: 1234,
-      }
-    }
+      },
+    },
   },
 };
 
@@ -17,11 +18,17 @@ const page2 = {
     likes: {
       2: {
         uid: 134,
-      }
-    }
+      },
+    },
   },
 };
 
-let r = mergeDeeplyElements(page1, page2).toJS();
+let obj = mergeDeeplyElements(page1, page2).toJS();
 
-console.log(`Result = ${r}`);
+console.log(`mergeDeeplyElements:`);
+
+console.log(obj);
+
+// for (const [k, v] of Object.entries(obj)) {
+// 	console.log(`obj[${k}] = ${v}`);
+// }
