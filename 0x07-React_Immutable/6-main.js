@@ -28,7 +28,3 @@ let obj = mergeDeeplyElements(page1, page2).toJS();
 console.log(`mergeDeeplyElements:`);
 
 console.log(obj);
-
-// for (const [k, v] of Object.entries(obj)) {
-// 	console.log(`obj[${k}] = ${v}`);
-// }
