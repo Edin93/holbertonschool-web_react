@@ -16,9 +16,9 @@ const notification = new schema.Entity("notifications", {
   context: message,
 });
 
-const mySchema = new schema.Array(notification);
+const notificationArray = new schema.Array(notification);
 
-let normalizedData = normalize(jsonData, mySchema);
+let normalizedData = normalize(jsonData, notificationArray);
 
 const getAllNotificationsByUser = (userId) => {
   let result = [];
@@ -31,7 +31,14 @@ const getAllNotificationsByUser = (userId) => {
   return result;
 };
 
+
+const notificationsNormalizer = (data) => {
+  let normalizedData = normalize(data, notificationArray);
+  return normalizedData;
+};
+
 module.exports = {
   normalizedData,
   getAllNotificationsByUser,
+  notificationsNormalizer,
 };
