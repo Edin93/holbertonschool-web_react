@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://intranet.hbtn.io/
+HostUrl=https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/misc/2019/11/e240f8157634d33a9757.ico?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240712%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240712T091748Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=51d43828c1b5ff5dc8a6537f01fc2be98ff8a8393b0caa7b16bf6a83dbb6d689
