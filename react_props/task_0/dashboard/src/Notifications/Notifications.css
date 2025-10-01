@@ -1,0 +1,12 @@
+.notifications {
+    border: 2px #e1003c dashed;
+    padding-left: 20px;
+}
+
+.notifications ul {
+    color: #e1003c;
+}
+
+.notifications ul li[data-priority=default]{
+    color: blue;
+}

@@ -1,0 +1,9 @@
+.App-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e1003c;
+}
+
+.App-header h1 {
+    color: #e1003c;
+}
