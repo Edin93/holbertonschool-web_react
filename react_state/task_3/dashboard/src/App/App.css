@@ -1,0 +1,26 @@
+.App-logo {
+  height: 30vmin;
+}
+
+.App-header {
+  display: inline-flex;
+  align-items: center;
+  font-size: 20px;
+  font-family: sans-serif;
+  color: #e0454b;
+}
+
+.App-body {
+  border-top: solid;
+  border-bottom: solid;
+  border-color: #e0454b;
+  height: 50vh;
+  padding: 30px;
+}
+
+.App-footer {
+  display: flex;
+  justify-content: center;
+  font-style: italic;
+  font-family: sans-serif;
+}
