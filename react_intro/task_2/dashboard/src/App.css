@@ -1,0 +1,27 @@
+.App-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #e1003c;
+}
+
+.App-header h1 {
+  color: #e1003c;
+}
+
+.App-body {
+  margin: 20px;
+}
+
+.App-body input{
+  margin: 0px 10px 0px 10px;
+}
+
+.App-footer {
+  position: absolute;
+  bottom: 0;
+  min-width: 100vw;
+  font-size: 16px;
+  border-top: 2px solid #e1003c;
+  text-align: center;
+  font-style: italic;
+}
