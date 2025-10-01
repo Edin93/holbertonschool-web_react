@@ -1,0 +1,18 @@
+.App-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.App-header h1 {
+  color: #e1003c;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.App-logo {
+  height: 30vmin;
+  pointer-events: none;
+}

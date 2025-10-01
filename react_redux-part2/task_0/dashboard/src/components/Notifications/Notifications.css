@@ -1,0 +1,67 @@
+
+.Notifications {
+  position: relative;
+  border: 3px dotted #e1003c;
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  width: 25%;
+  float: right;
+  margin-top: 20px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+
+.Notifications.visible {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: rgb(233, 67, 67);
+}
+
+.Notifications p {
+  margin: 0;
+}
+
+.Notifications button {
+  position: absolute;
+  cursor: pointer;
+  right: 5px;
+  top: 5px;
+  background: transparent;
+  border: none;
+  
+}
+
+.notification-title {
+  float: right;
+  position: absolute;
+  right: 10px;
+  top: 2px;
+}
+
+
+.NotificationItem {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.NotificationItem:not(.read) {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

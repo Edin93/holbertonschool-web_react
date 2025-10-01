@@ -1,0 +1,17 @@
+.courses {
+  margin: 130px auto;
+  width: 90%;
+  height: 33vh;
+}
+
+#CourseList {
+  width: 100%;
+}
+
+table,
+th,
+tr,
+td {
+  border-collapse: collapse;
+  border: 2px solid rgb(161, 161, 161);
+}
