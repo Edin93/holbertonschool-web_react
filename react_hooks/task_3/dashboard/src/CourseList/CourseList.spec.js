@@ -1,20 +1,32 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import App from '../App/App';
-import { newContext } from '../Context/context';
+import { render, screen } from '@testing-library/react';
+import CourseList from './CourseList';
 
-describe('CourseList Component', () => {
-  test('renders 5 different rows when user is logged in', () => {
-    render(<App />);
-    const emailInput = screen.getByLabelText(/Email:/i);
-    const passwordInput = screen.getByLabelText(/Password:/i);
-    const loginButton = screen.getByRole('button', { name: /ok/i });
 
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(loginButton);
-    
-    const rows = screen.getAllByRole('row');
-    expect(rows).toHaveLength(5);
-  });
+test('it should render the CourseList component with 5 rows', () => {
+  const props = {
+    courses : [
+      { id:1, name:'ES6', credit:60 },
+      { id:2, name:'Webpack', credit:20 },
+      { id:3, name:'React', credit:40 }
+    ]
+  }
+  render(<CourseList {...props} />)
+
+  const rowElements = screen.getAllByRole('row');
+
+  expect(rowElements).toHaveLength(5)
+})
+
+test('it should render the CourseList component with 1 row', () => {
+  const props = {
+    courses : []
+  }
+
+  render(<CourseList {...props} />)
+
+  const rowElement = screen.getAllByRole('row');
+  const rowText = screen.getByText(/No course available yet/i);
+
+  expect(rowElement).toHaveLength(1)
+  expect(rowText).toBeInTheDocument()
 });

@@ -1,7 +1,8 @@
-import Notifications from "../Notifications/Notifications.jsx";
-import Header from "../Header/Header.jsx";
-import Login from "../Login/Login.jsx";
-import Footer from "../Footer/Footer.jsx";
+import './App.css'
+import Notifications from '../Notifications/Notifications';
+import Header from '../Header/Header';
+import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Login />
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

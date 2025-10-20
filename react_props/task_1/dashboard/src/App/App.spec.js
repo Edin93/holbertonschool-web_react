@@ -1,7 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
-import App from "./App";
+import { render } from '@testing-library/react';
+import App from './App';
 
-test("Should render the header, login, and footer components", () => {
+test('it should render wihtout crashing', () => {
   render(<App />);
 });

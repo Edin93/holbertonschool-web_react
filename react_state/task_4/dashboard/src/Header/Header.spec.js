@@ -1,47 +1,85 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react"
-import Header from "./Header";
-import { newContext } from '../Context/context';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Header from './Header';
+import newContext from '../Context/context';
 
-describe('Header Component', () => {
-    test('Renders School Dashboard heading', () => {
-        render(<Header />);
-        const headingElement = screen.getByRole('heading', { name: /School dashboard/i });
-        expect(headingElement).toBeInTheDocument();
-    });
+export const convertHexToRGBA = (hexCode) => {
+  let hex = hexCode.replace('#', '');
 
-    test('Renders App img', () => {
-        render(<Header />);
-        const imgElement = screen.getByRole('img', { name: /holberton logo/i });
-        expect(imgElement).toBeInTheDocument();
-    });
+  if (hex.length === 3) {
+    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+    console.log({hex})
+  }
 
-    test('Does not display the logoutSection when user is not logged in', () => {
-        render(
-            <newContext.Provider value={{ user: { isLoggedIn: false, email: '' }, logOut: jest.fn() }}>
-                <Header />
-            </newContext.Provider>
-        );
-        expect(screen.queryByText(/Welcome/)).not.toBeInTheDocument();
-    });
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
 
-    test('Displays the logoutSection when user is logged in', () => {
-        render(
-            <newContext.Provider value={{ user: { isLoggedIn: true, email: 'test@example.com' }, logOut: jest.fn() }}>
-                <Header />
-            </newContext.Provider>
-        );
-        expect(screen.getByText(/Welcome test@example.com/)).toBeInTheDocument();
-    });
+  return { r, g, b };
+};
 
-    test('Calls logOut when clicking the logout link', () => {
-        const mockLogOut = jest.fn();
-        render(
-            <newContext.Provider value={{ user: { isLoggedIn: true, email: 'test@example.com' }, logOut: mockLogOut }}>
-                <Header />
-            </newContext.Provider>
-        );
-        fireEvent.click(screen.getByText(/logout/));
-        expect(mockLogOut).toHaveBeenCalled();
-    });
-})
+test('should contain a <p/> element with specific text, <h1/>, and an <img/>', () => {
+  render(<Header />);
+
+  const headingElement = screen.getByRole('heading', {name: /school Dashboard/i});
+  const imgElement = screen.getByAltText('holberton logo')
+
+  expect(headingElement).toBeInTheDocument();
+  expect(headingElement).toHaveStyle({color: convertHexToRGBA('#e1003c') })
+  expect(imgElement).toBeInTheDocument();
+});
+
+test('logoutSection is not rendered when using default context value', () => {
+  render(<Header />);
+
+  const logoutSection = screen.queryByText(/logout/i);
+
+  expect(logoutSection).not.toBeInTheDocument();
+});
+
+test('logoutSection is rendered when user is logged in', () => {
+  const contextValue = {
+    user: {
+      email: 'test@example.com',
+      password: 'password123',
+      isLoggedIn: true
+    },
+    logOut: jest.fn()
+  };
+
+  render(
+    <newContext.Provider value={contextValue}>
+      <Header />
+    </newContext.Provider>
+  );
+
+  const logoutSection = screen.getByText(/welcome test@example.com/i);
+
+  expect(logoutSection).toBeInTheDocument();
+});
+
+test('clicking logout link calls the logOut function', async () => {
+  const user = userEvent.setup();
+  const mockLogOut = jest.fn();
+
+  const contextValue = {
+    user: {
+      email: 'test@example.com',
+      password: 'password123',
+      isLoggedIn: true
+    },
+    logOut: mockLogOut
+  };
+
+  render(
+    <newContext.Provider value={contextValue}>
+      <Header />
+    </newContext.Provider>
+  );
+
+  const logoutLink = screen.getByText('logout');
+
+  await user.click(logoutLink);
+
+  expect(mockLogOut).toHaveBeenCalledTimes(1);
+});

@@ -1,7 +1,36 @@
-import { render } from "@testing-library/react";
-import { test } from "@jest/globals";
-import App from "./App";
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test("Should render the header, login, and footer components", () => {
+test('The App component render successfully', () => {
   render(<App />);
+});
+
+test('The App component render successfully', () => {
+  const props = {
+    isLoggedIn: true
+  }
+
+  render(<App {...props} />);
+
+  const tableElement = screen.getByRole('table');
+
+  expect(tableElement).toBeInTheDocument()
+});
+
+test('The App component render successfully', () => {
+  const props = {
+    isLoggedIn: false
+  }
+
+  render(<App {...props} />);
+
+  const inputElements = screen.getAllByLabelText(/email|password/i);
+  const emailLabelElement = screen.getByLabelText(/email/i);
+  const passwordLabelElement = screen.getByLabelText(/password/i);
+  const buttonElementText = screen.getByRole('button', { name: /ok/i })
+
+  expect(inputElements).toHaveLength(2)
+  expect(emailLabelElement).toBeInTheDocument()
+  expect(passwordLabelElement).toBeInTheDocument()
+  expect(buttonElementText).toBeInTheDocument()
 });

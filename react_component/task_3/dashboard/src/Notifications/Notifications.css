@@ -1,11 +1,35 @@
-.notifications {
-     border: dotted;
-    border-color: crimson;
-    margin-top: 1%;
-    padding-left: 1rem;
-    margin-bottom: 1rem;
-    width: 40%;
-    margin-left: 59%;
+.notification-items {
+  position: relative;
+  border: 3px dotted #e1003c;
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  width: 25%;
+  float: right;
+  margin-top: 20px;
+}
+
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: rgb(233, 67, 67);
+}
+
+.notification-items p {
+  margin: 0;
+}
+.notification-items button {
+  position: absolute;
+  cursor: pointer;
+  right: calc(0% - 480px);
+  top: calc(0% - 480px);
+  background: transparent;
+  transform: scale(0.012);
+  -webkit-transform: scale(0.012);
+  -moz-transform: scale(0.012);
+  -ms-transform: scale(0.012);
+  -o-transform: scale(0.012);
 }
 
 .notification-title {
@@ -13,25 +37,4 @@
   position: absolute;
   right: 10px;
   top: 2px;
-}
-
-.notifications button {
-  position: absolute;
-  cursor: pointer;
-  right: 5px;
-  top: 22px;
-  background: transparent;
-  border: none;
-}
-
-.close-icon {
-    width: 1rem;
-}
-
-.notifications ul {
-    color: #e1003c;
-}
-
-.notifications ul li[data-priority=default]{
-    color: blue;
 }

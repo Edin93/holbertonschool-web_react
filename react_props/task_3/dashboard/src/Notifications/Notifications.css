@@ -1,32 +1,34 @@
-.notifications {
-     border: dotted;
-    border-color: crimson;
-    margin-top: 1%;
-    padding-left: 1rem;
-    margin-bottom: 1rem;
-    width: 40%;
-    margin-left: 59%;
+.notification-items {
+  position: relative;
+  border: 3px dotted #e1003c;
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
 }
 
-.notifications button {
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: rgb(233, 67, 67);
+}
+
+.notification-items button {
   position: absolute;
-  cursor: pointer;
-  right: 5px;
-  top: 22px;
+  right: calc(0% - 480px);
+  top: calc(0% - 480px);
   background: transparent;
-  border: none;
+  transform: scale(0.012);
+  -webkit-transform: scale(0.012);
+  -moz-transform: scale(0.012);
+  -ms-transform: scale(0.012);
+  -o-transform: scale(0.012);
 }
 
-.close-icon {
-    width: 1rem;
-}
-
-
-
-.notifications ul {
-    color: #e1003c;
-}
-
-.notifications ul li[data-priority=default]{
-    color: blue;
+.menuItem {
+  float: right;
+  position: absolute;
+  background-color: red;
+  right: 10px;
+  top: 2px;
 }

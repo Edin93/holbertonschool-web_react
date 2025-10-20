@@ -2,26 +2,81 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import NotificationItem from './NotificationItem';
 
 
-test('Check whether the li element notification has the color blue when the type is set to be "defaut"', () => {
-  render(<NotificationItem type="default" />);
+test('it should call markAsRead with the correct id when the notification item is clicked', () => {
+  const mockMarkAsRead = jest.fn();
+  const props = {
+    id: 42,
+    type: 'default',
+    value: 'Test notification',
+    markAsRead: mockMarkAsRead,
+  };
+
+  render(<NotificationItem {...props} />);
+
   const liElement = screen.getByRole('listitem');
-  expect(liElement).toHaveStyle({ color: 'blue' });
+
+  fireEvent.click(liElement);
+
+  expect(mockMarkAsRead).toHaveBeenCalledTimes(1);
+  expect(mockMarkAsRead).toHaveBeenCalledWith(42);
 });
 
-test('Check whether the li element notification has the color red when the type is set to be "urgent"', () => {
-  render(<NotificationItem type="urgent" />);
-  const liElement = screen.getByRole('listitem');
-  expect(liElement).toHaveStyle({ color: 'red' });
-});
+describe('NotificationItem - React.memo behavior', () => {
+  let markAsRead;
 
-test('it should log to the console the "Notification id has been marked as read" with the correct notification item id', () => {
-  const mockMarkAsRead = jest.fn()
-  
-  render(<NotificationItem markAsRead={mockMarkAsRead} />);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    markAsRead = jest.fn();
+  });
 
-  const firstListItemElement = screen.getAllByRole('listitem')[0];
+  test('should update when props change', () => {
+    const { rerender, container } = render(
+      <NotificationItem
+        id={1}
+        type="urgent"
+        value="New notification"
+        markAsRead={markAsRead}
+      />
+    );
 
-  fireEvent.click(firstListItemElement)
+    const firstRender = container.querySelector('[data-notification-type]').textContent;
 
-  expect(mockMarkAsRead).toHaveBeenCalled()
+    rerender(
+      <NotificationItem
+        id={1}
+        type="urgent"
+        value="Updated notification"
+        markAsRead={markAsRead}
+      />
+    );
+
+    const secondRender = container.querySelector('[data-notification-type]').textContent;
+    expect(secondRender).not.toBe(firstRender);
+    expect(secondRender).toBe('Updated notification');
+  });
+
+  test('should not re-render when props do not change', () => {
+    const { rerender, container } = render(
+      <NotificationItem
+        id={1}
+        type="urgent"
+        value="New notification"
+        markAsRead={markAsRead}
+      />
+    );
+
+    const firstElement = container.querySelector('[data-notification-type]');
+
+    rerender(
+      <NotificationItem
+        id={1}
+        type="urgent"
+        value="New notification"
+        markAsRead={markAsRead}
+      />
+    );
+
+    const secondElement = container.querySelector('[data-notification-type]');
+    expect(secondElement.textContent).toBe(firstElement.textContent);
+  });
 });

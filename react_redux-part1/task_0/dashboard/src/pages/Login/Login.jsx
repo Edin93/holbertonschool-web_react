@@ -1,77 +1,105 @@
-import { StyleSheet, css } from 'aphrodite';
-import WithLogging from '../../components/HOC/WithLogging';
-import useLogin from '../../hooks/useLogin';
+import { StyleSheet, css } from "aphrodite";
+import WithLogging from "../../components/HOC/WithLogging";
+import useLogin from "../../hooks/useLogin";
 
 const styles = StyleSheet.create({
   body: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '60vh',
-    padding: '20px 20px 20px 40px',
-    borderTop: '5px solid red',
-    fontFamily: 'Roboto, sans-serif',
+    display: "flex",
+    flexDirection: "column",
+    height: "60vh",
+    padding: "20px 20px 20px 40px",
+    borderTop: "5px red solid",
   },
-  paragraph: {
-    fontSize: '1.3rem',
-    margin: 0,
+  p: {
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "1.3rem",
   },
   form: {
-    margin: '20px 0',
-    fontSize: '1.2rem',
+    margin: "20px 0",
+    fontSize: "1.2rem",
+    fontFamily: "Roboto, sans-serif",
+    display: "flex",
+    flexDirection: "row",
+    "@media (max-width: 900px)": {
+      flexDirection: "column",
+    },
   },
   label: {
-    paddingRight: '10px',
+    paddingRight: "10px",
+    "@media (max-width: 900px)": {
+      display: "block",
+    },
   },
   input: {
-    marginRight: '10px',
+    marginRight: "10px",
+    "@media (max-width: 900px)": {
+      display: "block",
+      marginBottom: "10px",
+      paddingBottom: "5px",
+      paddingTop: "5px",
+      fontSize: "20px",
+      width: "100%",
+      boxSizing: "border-box",
+    },
   },
   button: {
-    cursor: 'pointer',
+    cursor: "pointer",
+    "@media (max-width: 900px)": {
+      display: "block",
+      marginTop: "10px",
+      paddingBottom: "5px",
+      paddingTop: "5px",
+      fontSize: "16px",
+      width: "100%",
+      boxSizing: "border-box",
+    },
   },
 });
 
-function Login({ login }) {
+const Login = ({ logIn }) => {
   const {
     email,
     password,
     enableSubmit,
     handleChangeEmail,
     handleChangePassword,
-    handleLoginSubmit,
-  } = useLogin({ onLogin: login });
+    handleLoginSubmit
+  } = useLogin(logIn);
 
   return (
-    <form aria-label="form" onSubmit={handleLoginSubmit}>
-      <div className={css(styles.body)}>
-        <p className={css(styles.paragraph)}>Login to access the full dashboard</p>
-        <div className={css(styles.form)}>
-          <label htmlFor="email" className={css(styles.label)}>Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={handleChangeEmail}
-            className={css(styles.input)}
-          />
-          <label htmlFor="password" className={css(styles.label)}>Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={handleChangePassword}
-            className={css(styles.input)}
-          />
-          <input
-            type="submit"
-            value="OK"
-            disabled={!enableSubmit}
-            className={css(styles.button)}
-          />
-        </div>
-      </div>
-    </form>
+    <div className={css(styles.body)}>
+      <p className={css(styles.p)}>Login to access the full dashboard</p>
+      <form className={css(styles.form)} onSubmit={handleLoginSubmit}>
+        <label htmlFor="email" className={css(styles.label)}>
+          Email
+        </label>
+        <input
+          type="email"
+          name="user_email"
+          id="email"
+          className={css(styles.input)}
+          value={email}
+          onChange={handleChangeEmail}
+        />
+        <label htmlFor="password" className={css(styles.label)}>
+          Password
+        </label>
+        <input
+          type="password"
+          name="user_password"
+          id="password"
+          className={css(styles.input)}
+          value={password}
+          onChange={handleChangePassword}
+        />
+        <input
+          type="submit"
+          value="OK"
+          className={css(styles.button)}
+          disabled={!enableSubmit}
+        />
+      </form>
+    </div>
   );
 }
 

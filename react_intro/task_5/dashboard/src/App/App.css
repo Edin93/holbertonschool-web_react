@@ -1,27 +1,50 @@
-.App-header {
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid #e1003c;
+.App-header img {
+  height: 30vmin;
 }
 
-.App-header h1 {
+.App-header {
+  display: inline-flex;
+  align-items: center;
+  font-size: 20px;
+  font-family: sans-serif;
   color: #e1003c;
 }
 
 .App-body {
-  margin: 20px;
+  border-top: solid;
+  border-bottom: solid;
+  border-color: #e0454b;
+  height: 50vh;
+  padding: 30px;
 }
 
-.App-body input{
-  margin: 0px 10px 0px 10px;
+.App-body .App-form {
+    margin: 30px 0;
 }
 
 .App-footer {
-  position: absolute;
-  bottom: 0;
-  min-width: 100vw;
-  font-size: 16px;
-  border-top: 2px solid #e1003c;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   font-style: italic;
+  font-family: sans-serif;
+}
+
+.App-footer p {
+  font-size: 1.2rem
+}
+
+.App-body .form label{
+    padding-right: 10px;
+}
+  
+#email, #password {
+    margin-right: 10px
+}
+  
+.form button {
+    cursor: pointer;
+}
+
+#email, #password {
+    margin-left: 10px;
 }

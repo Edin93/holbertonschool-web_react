@@ -1,13 +1,27 @@
-import React from 'react'
-import './Footer.css'
-import { getFullYear, getFooterCopy } from '../utils/utils';
+import { StyleSheet, css } from 'aphrodite';
+import { getCurrentYear, getFooterCopy } from '../utils/utils';
 
-export default function Footer() {
-    return (
-        <div className='App-footer'>
-            <p>
-                Copyright {getFullYear()} - {getFooterCopy(true)}
-            </p>
-        </div>
-    );
+const styles = StyleSheet.create({
+  footer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTop: '5px red solid'
+  },
+  p: {
+    fontFamily: 'Roboto, sans-serif',
+    fontStyle: 'italic',
+    fontSize: '1.3rem',
+    padding: '0 3px'
+  }
+});
+
+function Footer() {
+  return (
+    <div className={css(styles.footer)}>
+      <p className={css(styles.p)}>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
+    </div>
+  )
 }
+
+export default Footer;

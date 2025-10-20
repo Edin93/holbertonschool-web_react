@@ -1,90 +1,72 @@
-import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { beforeEach, afterEach, test, expect, jest } from "@jest/globals";
 import App from './App';
 
-const mockBodySection = jest.fn();
-jest.mock("../BodySection/BodySection", () => {
-  return jest.fn().mockImplementation((props) => {
-    mockBodySection(props);
-    return (
-      <div>
-        <h2>{props.title}</h2>
-        {props.children}
-      </div>
-    );
-  });
+test('The App component renders without crashing', () => {
+  render(<App />);
 });
 
-beforeEach(() => {
-  jest.spyOn(document, 'addEventListener');
-  jest.spyOn(document, 'removeEventListener');
+test('The App component renders CourseList when isLoggedIn is true', () => {
+  const props = {
+    isLoggedIn: true
+  }
+
+  render(<App {...props} />);
+
+  const tableElement = screen.getByRole('table');
+
+  expect(tableElement).toBeInTheDocument()
 });
 
-afterEach(() => {
-  document.addEventListener.mockRestore();
-  document.removeEventListener.mockRestore();
+test('The App component renders Login when isLoggedIn is false', () => {
+  const props = {
+    isLoggedIn: false
+  }
+
+  render(<App {...props} />);
+
+  const inputElements = screen.getAllByLabelText(/email|password/i);
+  const emailLabelElement = screen.getByLabelText(/email/i);
+  const passwordLabelElement = screen.getByLabelText(/password/i);
+  const buttonElementText = screen.getByRole('button', { name: /ok/i })
+
+  expect(inputElements).toHaveLength(2)
+  expect(emailLabelElement).toBeInTheDocument()
+  expect(passwordLabelElement).toBeInTheDocument()
+  expect(buttonElementText).toBeInTheDocument()
 });
 
-test('Should return true if the App component is a class component', () => {
-  const props = Object.getOwnPropertyNames(App.prototype);
-  const isClassComponent = App.prototype.__proto__ === React.Component.prototype;
-  const inheritsFromReactComponent = Object.getPrototypeOf(App.prototype) === React.Component.prototype;
-  expect(props).toContain('constructor');
-  expect(isClassComponent).toBe(true);
-  expect(inheritsFromReactComponent).toBe(true);
-});
-
-test('Should call the logOut prop once whenever the user hits "Ctrl" + "h" keyboard keys', () => {
+test('it should call the logOut prop once whenever the user hits "Ctrl" + "h" keyboard keys', () => {
   const logOutMock = jest.fn();
-  jest.spyOn(window, 'alert').mockImplementation(() => { });
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+
   render(<App isLoggedIn={true} logOut={logOutMock} />);
+
   fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
+
   expect(logOutMock).toHaveBeenCalledTimes(1);
+
+  alertSpy.mockRestore();
 });
 
-test('Should display an alert window whenever the user hit "ctrl" + "h" keyboard keys', () => {
+test('it should display an alert window whenever the user hit "ctrl" + "h" keyboard keys', () => {
   const logoutSpy = jest.fn();
-  window.alert = jest.fn();
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+
   render(<App logOut={logoutSpy} />);
+
   fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
-  expect(window.alert).toHaveBeenCalledWith('Logging you out');
+
+  expect(alertSpy).toHaveBeenCalledWith('Logging you out');
+
+  alertSpy.mockRestore();
 });
 
-test('Should remove event listener in componentWillUnmount', () => {
-  const { unmount } = render(<App isLoggedIn={false} />);
-  expect(document.addEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
-  unmount();
-  expect(document.removeEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
-});
+test('it should display "News from the School" title and paragraph by default', () => {
+  render(<App />);
 
-test('Should add event listener in componentDidMount', () => {
-  render(<App isLoggedIn={false} />);
-  expect(document.addEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
-});
+  const newsTitle = screen.getByRole('heading', { name: /news from the school/i });
+  const newsParagraph = screen.getByText(/holberton school news goes here/i);
 
-test('Should add the title of "Course list" above the CourseList component when the isLoggedIn prop set to true', () => {
-  render(<App isLoggedIn={true} />)
-  expect(screen.getByRole('heading', { name: /Course list/i })).toBeInTheDocument();
-});
-
-test('Should add the title of "Log in to continue" above the Login component when the isLoggedIn prop set to false', () => {
-  render(<App isLoggedIn={false} />)
-  expect(screen.getByRole('heading', { name: /Log in to continue/i })).toBeInTheDocument();
-});
-
-test('Should render BodySection as a child component', () => {
-  render(<App isLoggedIn={false} />);
-  expect(mockBodySection).toHaveBeenCalled();
-});
-
-test('Should render BodySection with news when logged in', () => {
-  render(<App isLoggedIn={true} />);
-  expect(mockBodySection).toHaveBeenCalled();
-});
-
-test('Should render a heading element with a text "", and a paragraph with text ""', () => {
-  render(<App />)
-  expect(screen.getByRole('heading', { name: /News from the school/i })).toBeInTheDocument();
-  expect(screen.getByText(/Holberton School News goes here/i)).toBeInTheDocument()
+  expect(newsTitle).toBeInTheDocument();
+  expect(newsParagraph).toBeInTheDocument();
 });

@@ -1,104 +1,70 @@
-import React, { useRef, useEffect } from 'react';
-import { render, screen, fireEvent } from "@testing-library/react"
-import App from './App'
-import Header from "../Header/Header";
-import Login from "../Login/Login";
-import Footer from "../Footer/Footer";
-import Notifications from "../Notifications/Notifications";
+import { render, fireEvent, screen } from '@testing-library/react';
+import App from './App';
 
-
-function AppTestWrapper() {
-  const appRef = useRef();
-
-  useEffect(() => {
-    if (appRef.current) {
-      appRef.current.setState((prevState) => ({
-        ...prevState,
-        user: {
-          ...prevState.user,
-          isLoggedIn: true,
-        },
-      }));
-    }
-  }, []);
-
-
-  return <App ref={appRef} />;
-}
-
-
-test('Renders App component without craching', () => {
+test('The App component renders without crashing', () => {
   render(<App />);
 });
 
-test('Renders Header component without craching', () => {
-  render(<Header />);
+test('The App component renders CourseList when isLoggedIn is true', () => {
+  const props = {
+    isLoggedIn: true
+  }
+
+  render(<App {...props} />);
+
+  const tableElement = screen.getByRole('table');
+
+  expect(tableElement).toBeInTheDocument()
 });
 
-test('Renders Login component without craching', () => {
-  render(<Login />);
+test('The App component renders Login when isLoggedIn is false', () => {
+  const props = {
+    isLoggedIn: false
+  }
+
+  render(<App {...props} />);
+
+  const emailLabelElement = screen.getByLabelText(/email/i);
+  const passwordLabelElement = screen.getByLabelText(/password/i);
+  const buttonElements = screen.getAllByRole('button', { name: /ok/i })
+
+  expect(emailLabelElement).toBeInTheDocument()
+  expect(passwordLabelElement).toBeInTheDocument()
+  expect(buttonElements.length).toBeGreaterThanOrEqual(1)
 });
 
-test('Renders Footer component without craching', () => {
-  render(<Footer />);
-});
-
-test('Renders Notifications component without craching', () => {
-  render(<Notifications />);
-});
-
-test('Renders 2 input elements and a button with the text "OK" when isLoggedIn is false', () => {
-  render(<App isLoggedIn={false} />);
-  const emailInput = screen.getAllByRole('textbox', { name: /email/i });
-  expect(emailInput.length).toBe(1);
-  const passwordInput = screen.getByText(/password/i);
-  expect(passwordInput).toBeInTheDocument();
-  const buttonElement = screen.getByRole('button', { name: 'OK' });
-  expect(buttonElement).toBeInTheDocument();
-});
-
-test('Renders a table element when isLoggedIn is true', async () => {
-  render(<AppTestWrapper />);
-  const table = await screen.findByRole('table');
-  expect(table).toBeInTheDocument();
-
-});
-
-window.alert = jest.fn();
-
-test('Calls logOut when Ctrl + H is pressed', () => {
+test('it should call the logOut prop once whenever the user hits "Ctrl" + "h" keyboard keys', () => {
   const logOutMock = jest.fn();
-  window.alert = jest.fn();
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
-  render(<AppTestWrapper logOutSpy={logOutMock} />);
+  render(<App isLoggedIn={true} logOut={logOutMock} />);
 
-  fireEvent.keyDown(window, { key: 'h', ctrlKey: true });
+  fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
 
   expect(logOutMock).toHaveBeenCalledTimes(1);
+
+  alertSpy.mockRestore();
 });
 
-test('Calls alert with "Logging you out" when Ctrl + H is pressed', () => {
-  render(<App isLoggedIn={true} />);
-  fireEvent.keyDown(document, { key: 'h', ctrlKey: true });
-  expect(global.alert).toHaveBeenCalledWith('Logging you out');
+test('it should display an alert window whenever the user hit "ctrl" + "h" keyboard keys', () => {
+  const logoutSpy = jest.fn();
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+
+  render(<App logOut={logoutSpy} />);
+
+  fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
+
+  expect(alertSpy).toHaveBeenCalledWith('Logging you out');
+
+  alertSpy.mockRestore();
 });
 
-test('Displays the title "Course list" above the CourseList component when isLoggedIn is true', () => {
-  render(<AppTestWrapper />);
-  const courseListTitle = screen.getByText("Course list");
-  expect(courseListTitle).toBeInTheDocument();
-});
-
-test('Displays the title "Log in to continue" above the Login component when isLoggedIn is false', () => {
-  render(<App isLoggedIn={false} />);
-  const loginTitle = screen.getByText('Log in to continue');
-  expect(loginTitle).toBeInTheDocument();
-});
-
-test('Displays "News from the School" and "Holberton School News goes here" by default', () => {
+test('it should display "News from the School" title and paragraph by default', () => {
   render(<App />);
-  const newsTitle = screen.getByText('News from the School');
+
+  const newsTitle = screen.getByRole('heading', { name: /news from the school/i });
+  const newsParagraph = screen.getByText(/holberton school news goes here/i);
+
   expect(newsTitle).toBeInTheDocument();
-  const newsContent = screen.getByText('Holberton School News goes here');
-  expect(newsContent).toBeInTheDocument();
+  expect(newsParagraph).toBeInTheDocument();
 });

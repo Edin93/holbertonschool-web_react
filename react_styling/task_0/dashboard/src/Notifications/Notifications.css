@@ -1,0 +1,49 @@
+.notification-items {
+  position: relative;
+  border: 3px dotted #e1003c;
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  padding: 5px 40px 5px 5px;
+  width: 25%;
+  float: right;
+  margin-top: 25px;
+}
+
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: rgb(233, 67, 67);
+}
+
+ul {
+  padding-left: 20px;
+  list-style: square;
+}
+
+.notification-items p {
+  margin: 0px;
+}
+
+.notification-items button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transform: scale(1);
+}
+
+.notification-items button img {
+  width: 10px;
+  height: 10px;
+}
+
+.notification-title {
+  float: right;
+  position: absolute;
+  right: 15px;
+  top: 2px;
+}

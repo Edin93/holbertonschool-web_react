@@ -1,18 +1,79 @@
-import { useReducer, useEffect, useCallback } from 'react';
+import { useEffect, useReducer, useCallback } from 'react';
 import axios from 'axios';
-import Notification from '../Notifications/Notifications';
-import Header from '../Header/Header';
-import Login from "../Login/Login";
+import { StyleSheet, css } from 'aphrodite';
+import Notifications from '../Notifications/Notifications';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import { getLatestNotification } from '../utils/utils';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import { appReducer, initialState, APP_ACTIONS } from './appReducer';
-import './App.css';
 
-function App() {
+const API_BASE_URL = 'http://localhost:5173';
+const ENDPOINTS = {
+  courses: `${API_BASE_URL}/courses.json`,
+  notifications: `${API_BASE_URL}/notifications.json`,
+};
+
+const styles = StyleSheet.create({
+  app: {
+    position: 'relative'
+  }
+});
+
+export default function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(ENDPOINTS.notifications);
+        const latestNotif = {
+          id: 3,
+          type: "urgent",
+          html: { __html: getLatestNotification() }
+        };
+
+        const currentNotifications = response.data.notifications;
+        const indexToReplace = currentNotifications.findIndex(
+          notification => notification.id === 3
+        );
+
+        const updatedNotifications = [...currentNotifications];
+        if (indexToReplace !== -1) {
+          updatedNotifications[indexToReplace] = latestNotif;
+        } else {
+          updatedNotifications.push(latestNotif);
+        }
+
+        dispatch({ type: APP_ACTIONS.SET_NOTIFICATIONS, payload: updatedNotifications });
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(ENDPOINTS.courses);
+        dispatch({ type: APP_ACTIONS.SET_COURSES, payload: response.data.courses });
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+
+    if (!state.user.isLoggedIn) {
+      dispatch({ type: APP_ACTIONS.SET_COURSES, payload: [] });
+      return;
+    }
+
+    fetchCourses();
+  }, [state.user.isLoggedIn]);
 
   const handleDisplayDrawer = useCallback(() => {
     dispatch({ type: APP_ACTIONS.TOGGLE_DRAWER });
@@ -25,7 +86,7 @@ function App() {
   const logIn = (email, password) => {
     dispatch({
       type: APP_ACTIONS.LOGIN,
-      payload: { email, password, isLoggedIn: true },
+      payload: { email, password }
     });
   };
 
@@ -34,74 +95,42 @@ function App() {
   };
 
   const markNotificationAsRead = useCallback((id) => {
-    console.log(`Notification ${id} has been marked as read`);
     dispatch({
       type: APP_ACTIONS.MARK_NOTIFICATION_READ,
-      payload: { id },
+      payload: id
     });
+    console.log(`Notification ${id} has been marked as read`);
   }, []);
-
-  useEffect(() => {
-    if (state.notifications) {
-      const fetchNotifications = async () => {
-        try {
-          const response = await axios.get('http://localhost:5173/notifications.json');
-          const fetchedNotifications = response.data.notifications.map((notif) => {
-            if (notif.html && notif.html.__html === "") {
-              notif.html.__html = getLatestNotification();
-            }
-            return notif;
-          });
-          dispatch({ type: APP_ACTIONS.SET_NOTIFICATIONS, payload: fetchedNotifications });
-        } catch (error) {
-          console.error('Error fetching notifications:', error);
-        }
-      };
-      fetchNotifications();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (state.user.isLoggedIn) {
-      const fetchCourses = async () => {
-        try {
-          const response = await axios.get('http://localhost:5173/courses.json');
-          dispatch({ type: APP_ACTIONS.SET_COURSES, payload: response.data.courses });
-        } catch (error) {
-          console.error('Error fetching courses:', error);
-        }
-      };
-      fetchCourses();
-    }
-  }, [state.user.isLoggedIn]);
 
   return (
-    <div className="App">
-      <Notification
+    <div className={css(styles.app)}>
+      <Notifications
         notifications={state.notifications}
-        displayDrawer={state.displayDrawer}
-        handleDisplayDrawer={handleDisplayDrawer}
         handleHideDrawer={handleHideDrawer}
+        handleDisplayDrawer={handleDisplayDrawer}
+        displayDrawer={state.displayDrawer}
         markNotificationAsRead={markNotificationAsRead}
       />
-      <Header user={state.user} />
-      {state.user.isLoggedIn ? (
-        <BodySectionWithMarginBottom title="Course list">
-          <CourseList courses={state.courses} />
-        </BodySectionWithMarginBottom>
-      ) : (
-        <BodySectionWithMarginBottom title="Log in to continue">
-          <Login
-            login={logIn}
-          />
-        </BodySectionWithMarginBottom>
-      )}
-      <BodySection title="News from the School">
-        <p>Holberton School news goes here</p>
-      </BodySection>
+      <>
+        <Header user={state.user} logOut={logOut} />
+        {!state.user.isLoggedIn ? (
+          <BodySectionWithMarginBottom title='Log in to continue'>
+            <Login
+              logIn={logIn}
+              email={state.user.email}
+              password={state.user.password}
+            />
+          </BodySectionWithMarginBottom>
+        ) : (
+          <BodySectionWithMarginBottom title='Course list'>
+            <CourseList courses={state.courses} />
+          </BodySectionWithMarginBottom>
+        )}
+        <BodySection title="News from the School">
+          <p>Holberton School news goes here</p>
+        </BodySection>
+      </>
       <Footer user={state.user} />
     </div>
   );
 }
-
-export default App;

@@ -2,49 +2,76 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import Footer from './Footer';
-import authSlice, { login } from '../../features/auth/authSlice';
+import authReducer from '../../features/auth/authSlice';
+import { getCurrentYear, getFooterCopy } from '../../utils/utils';
 
-describe('Footer', () => {
-    let store;
-    beforeEach(() => {
-        store = configureStore({
-            reducer: {
-                auth: authSlice,
-            },
-        });
-    });
+const createMockStore = (initialState) => {
+  return configureStore({
+    reducer: {
+      auth: authReducer
+    },
+    preloadedState: initialState
+  });
+};
 
-    test('Renders without crashing', () => {
-        const currentYear = new Date().getFullYear();
-        const expectedText = `Copyright ${currentYear} - Holberton School`;
-        render(
-            <Provider store={store}>
-                <Footer />
-            </Provider>
-        );
-        const footerText = screen.getByText(expectedText);
-        expect(footerText).toBeTruthy();
-    });
+const renderWithRedux = (component, initialState) => {
+  const store = createMockStore(initialState);
+  return render(
+    <Provider store={store}>
+      {component}
+    </Provider>
+  );
+};
 
-    test('Displays "Contact us" link when logged in', () => {
-        store.dispatch(login({ email: 'test@example.com', password: 'password123' }));
-        render(
-            <Provider store={store}>
-                <Footer />
-            </Provider>
-        );
-        const contactUsLink = screen.getByText(/contact us/i);
-        expect(contactUsLink).toBeInTheDocument();
-        expect(contactUsLink).toBeInstanceOf(HTMLAnchorElement);
-        expect(contactUsLink).toHaveAttribute('href');
-    });
+test('It should render footer with copyright text', () => {
+  const initialState = {
+    auth: {
+      user: {
+        email: '',
+        password: ''
+      },
+      isLoggedIn: false
+    }
+  };
 
-    test('Does not display "Contact us" link when logged out', () => {
-        render(
-            <Provider store={store}>
-                <Footer />
-            </Provider>
-        );
-        expect(screen.queryByText(/contact us/i)).not.toBeInTheDocument();
-    });
+  renderWithRedux(<Footer />, initialState);
+
+  const footerParagraph = screen.getByText(/copyright/i);
+
+  expect(footerParagraph).toHaveTextContent(new RegExp(`copyright ${(new Date()).getFullYear()}`, 'i'))
+  expect(footerParagraph).toHaveTextContent(/holberton school/i)
+});
+
+test('Contact us link is not displayed when user is logged out', () => {
+  const initialState = {
+    auth: {
+      user: {
+        email: '',
+        password: ''
+      },
+      isLoggedIn: false
+    }
+  };
+
+  renderWithRedux(<Footer />, initialState);
+
+  const contactLink = screen.queryByText(/contact us/i);
+  expect(contactLink).not.toBeInTheDocument();
+});
+
+test('Contact us link is displayed when user is logged in', () => {
+  const initialState = {
+    auth: {
+      user: {
+        email: 'test@test.com',
+        password: 'password123'
+      },
+      isLoggedIn: true
+    }
+  };
+
+  renderWithRedux(<Footer />, initialState);
+
+  const contactLink = screen.getByText(/contact us/i);
+  expect(contactLink).toBeInTheDocument();
 });

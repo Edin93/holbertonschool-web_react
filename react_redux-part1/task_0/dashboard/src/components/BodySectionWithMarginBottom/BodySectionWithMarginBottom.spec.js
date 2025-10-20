@@ -1,18 +1,17 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
+import { render } from '@testing-library/react';
 import { StyleSheetTestUtils } from 'aphrodite';
+import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
 
-beforeEach(() => {
+beforeAll(() => {
   StyleSheetTestUtils.suppressStyleInjection();
 });
 
-afterEach(() => {
+afterAll(() => {
   StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
 });
 
 const mockBodySection = jest.fn();
-jest.mock('../BodySection/BodySection', () => {
+jest.mock("../BodySection/BodySection", () => {
   const MockBodySection = (props) => {
     mockBodySection(props);
     return (
@@ -27,44 +26,46 @@ jest.mock('../BodySection/BodySection', () => {
 });
 
 describe('BodySectionWithMarginBottom', () => {
-  test('Should render BodySection inside a wrapper div with expected content', () => {
-    render(
-      <BodySectionWithMarginBottom title="Hello!">
-        <p>This is child content</p>
-        <span>Hey there!</span>
-      </BodySectionWithMarginBottom>
-    );
+    test('should render BodySection inside a div with class bodySectionWithMargin', () => {
+      const { container } = render(
+        <BodySectionWithMarginBottom title="Hello!">
+          <p>This is child content</p>
+          <span>Hey there!</span>
+        </BodySectionWithMarginBottom>
+      );
 
-    const wrapper = screen.getByTestId('body-section-with-margin');
-    expect(wrapper).toBeInTheDocument();
+      expect(mockBodySection).toHaveBeenCalled();
+      const classNames = container.firstChild.className;
+      expect(classNames).toMatch(/bodySectionWithMargin_/);
+      expect(mockBodySection).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Hello!",
+          children: expect.anything(),
+        })
+      );
+      expect(container.firstChild).toHaveTextContent('Hello!');
+      const bodySectionWithMargin = container.firstChild;
+      expect(bodySectionWithMargin).toHaveTextContent('Hello!');
+      expect(bodySectionWithMargin).toHaveTextContent('This is child content');
+      expect(bodySectionWithMargin).toHaveTextContent('Hey there!');
 
-    expect(mockBodySection).toHaveBeenCalledWith(
-      expect.objectContaining({
-        title: 'Hello!',
-        children: expect.anything(),
-      })
-    );
+      const pElement = container.querySelector('p');
+      const spanElement = container.querySelector('span');
+      expect(pElement).toBeInTheDocument();
+      expect(pElement).toHaveTextContent('This is child content');
+      expect(spanElement).toBeInTheDocument();
+      expect(spanElement).toHaveTextContent('Hey there!');
+    });
 
-    expect(wrapper).toHaveTextContent('Hello!');
-    expect(wrapper).toHaveTextContent('This is child content');
-    expect(wrapper).toHaveTextContent('Hey there!');
-
-    const pElement = screen.getByText('This is child content');
-    const spanElement = screen.getByText('Hey there!');
-    expect(pElement).toBeInTheDocument();
-    expect(spanElement).toBeInTheDocument();
-  });
-
-  test('Should apply a class name that includes "bodySectionWithMargin"', () => {
-    render(
+  test('should apply margin-bottom of 40px to the div with class bodySectionWithMargin', () => {
+    const { container } = render(
       <BodySectionWithMarginBottom title="Test Title">
         <p>Child Content</p>
       </BodySectionWithMarginBottom>
     );
 
-    const wrapper = screen.getByTestId('body-section-with-margin');
-    expect(wrapper).toBeInTheDocument();
-
-    expect(wrapper.className).toMatch(/bodySectionWithMargin/);
+    const divWithMargin = container.firstChild;
+    expect(divWithMargin).toBeInTheDocument();
+    expect(divWithMargin.className).toMatch(/bodySectionWithMargin_/);
   });
 });

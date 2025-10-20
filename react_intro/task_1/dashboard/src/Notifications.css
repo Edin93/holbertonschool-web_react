@@ -1,4 +1,6 @@
-.root-Notifications {
-    border: 2px #e1003c dashed;
-    padding-left: 20px;
+.notification-items {
+    border: dotted;
+    border-color: crimson;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
 }

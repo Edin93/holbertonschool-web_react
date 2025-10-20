@@ -1,10 +1,36 @@
-import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
+import {render, screen} from "@testing-library/react"
 import App from "./App";
 
-test("Should render the header, login, and footer components", () => {
+
+test('renders School Dashboard heading', () => {
   render(<App />);
-  expect(screen.getByText(/School dashboard/i)).toBeInTheDocument();
-  expect(screen.getByText(/Login to access the full dashboard/i)).toBeInTheDocument();
-  expect(screen.getByText(/Copyright 2025 - Holberton School/i)).toBeInTheDocument();
+  const headingElement = screen.getByRole('heading', { name: /School dashboard/i });
+  expect(headingElement).toBeInTheDocument();
+
+});
+
+test('renders App body text', () => {
+  render(<App />);
+  const bodyElement = screen.getByText(/Login to access the full dashboard/i);
+  expect(bodyElement.closest('.App-body')).toBeInTheDocument();
+});
+
+test('renders App img', () => {
+  render(<App />);
+  const imgElement = screen.getByRole('img', { name: /holberton logo/i });
+  expect(imgElement).toBeInTheDocument();
+});
+
+test('renders 2 label elements with text Email and Password', () => {
+  render(<App />);
+  const emailInput = screen.getByText(/email/i);
+  const passwordInput = screen.getByText(/password/i);
+  expect(emailInput).toBeInTheDocument();
+  expect(passwordInput).toBeInTheDocument();
+});
+
+test('renders a button with the text OK', () => {
+  render(<App />);
+  const buttonElement = screen.getByRole('button', { name: /ok/i });
+  expect(buttonElement).toBeInTheDocument();
 });

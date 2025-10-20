@@ -1,15 +1,28 @@
-import React from "react";
-import { render, screen } from "@testing-library/react"
-import Header from "./Header";
+import { render, screen } from '@testing-library/react';
+import Header from './Header';
 
-test('Renders School Dashboard heading', () => {
-    render(<Header />);
-    const headingElement = screen.getByRole('heading', { name: /School dashboard/i });
-    expect(headingElement).toBeInTheDocument();
-});
+export const convertHexToRGBA = (hexCode) => {
+  let hex = hexCode.replace('#', '');
 
-test('Renders App img', () => {
-    render(<Header />);
-    const imgElement = screen.getByRole('img', { name: /holberton logo/i });
-    expect(imgElement).toBeInTheDocument();
+  if (hex.length === 3) {
+    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+    console.log({hex})
+  }
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return { r, g, b };
+};
+
+test('should contain a <p/> element with specific text, <h1/>, and an <img/>', () => {
+  render(<Header />);
+
+  const headingElement = screen.getByRole('heading', {name: /school Dashboard/i});
+  const imgElement = screen.getByAltText('holberton logo')
+
+  expect(headingElement).toBeInTheDocument();
+  expect(headingElement).toHaveStyle({color: convertHexToRGBA('#e1003c') })
+  expect(imgElement).toBeInTheDocument();
 });

@@ -1,7 +1,11 @@
-import { getFooterCopy } from '../utils/utils';
+import { render, screen } from '@testing-library/react';
+import Footer from './Footer';
 
-describe('Footer Component', () => {
-    test('Renders correct copyright string when getFooterCopy returns true', () => {
-        expect(getFooterCopy(true)).toBe('Holberton School');
-    });
-})
+test('It should render footer with copyright text', () => {
+  render(<Footer />)
+
+  const footerParagraph = screen.getByText(/copyright/i);
+
+  expect(footerParagraph).toHaveTextContent(new RegExp(`copyright ${(new Date()).getFullYear()}`, 'i'))
+  expect(footerParagraph).toHaveTextContent(/holberton school/i)
+});

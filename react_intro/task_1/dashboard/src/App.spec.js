@@ -1,23 +1,16 @@
-import { render, screen } from "@testing-library/react";
-import { expect, test } from '@jest/globals';
-import App from "./App";
+import { render, screen } from '@testing-library/react';
+import App from './App.jsx';
 
-test('Should return a good title text : School dashboard', () => {
-  render(<App />)
-  const header = screen.getByText(/School dashboard/i);
-  expect(header).toBeInTheDocument();
-})
+test('should contain a <p/> element with specific text, <h1/>, and an <img/>', () => {
+  render(<App />);
 
-test('Should return 2 good text', () => {
-  render(<App />)
-  const p1 = screen.getByText(/Login to access the full dashboard/i);
-  const p2 = screen.getByText(/Copyright 2025 - holberton School/i);
-  expect(p1).toBeInTheDocument();
-  expect(p2).toBeInTheDocument();
-})
+  const paragraphElement = screen.getByText('Login to access the full dashboard');
+  const footerParagraphElement = screen.getByText(/copyright/i);
+  const headingElement = screen.getByRole('heading', { name: /school dashboard/i });
+  const imgElement = screen.getByRole('img');
 
-test('Should check header image is présent', () => {
-  render(<App />)
-  const imgHeader = screen.getByAltText(/holberton logo/i);
-  expect(imgHeader).toBeInTheDocument();
-})
+  expect(paragraphElement).toBeInTheDocument();
+  expect(footerParagraphElement).toBeInTheDocument();
+  expect(headingElement).toBeInTheDocument();
+  expect(imgElement).toBeInTheDocument();
+});

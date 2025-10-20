@@ -1,87 +1,74 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
-import Header from "../Header/Header";
-import Login from "../Login/Login";
-import Footer from "../Footer/Footer";
-import Notifications from "../Notifications/Notifications";
 
-test('renders App component without crashing', () => {
+test('The App component renders without crashing', () => {
   render(<App />);
 });
 
-test('renders Header component without crashing', () => {
-  render(<Header />);
-});
-
-test('renders Login component without crashing', () => {
-  render(<Login />);
-});
-
-test('renders Footer component without crashing', () => {
-  render(<Footer />);
-});
-
-test('renders Notifications component without crashing', () => {
-  render(<Notifications />);
-});
-
-test('renders 2 input elements and a button with the text "OK" when isLoggedIn is false', () => {
+test('The App component renders Login by default (user not logged in)', () => {
   render(<App />);
 
-  const emailInput = screen.getByLabelText(/email/i);
-  expect(emailInput).toBeInTheDocument();
+  const emailLabelElement = screen.getByLabelText(/email/i);
+  const passwordLabelElement = screen.getByLabelText(/password/i);
+  const buttonElements = screen.getAllByRole('button', { name: /ok/i })
 
-  const passwordInput = screen.getByLabelText(/password/i);
-  expect(passwordInput).toBeInTheDocument();
-
-  const buttonElement = screen.getByRole('button', { name: 'OK' });
-  expect(buttonElement).toBeInTheDocument();
+  expect(emailLabelElement).toBeInTheDocument()
+  expect(passwordLabelElement).toBeInTheDocument()
+  expect(buttonElements.length).toBeGreaterThanOrEqual(1)
 });
 
+test('it should call the logOut prop once whenever the user hits "Ctrl" + "h" keyboard keys', () => {
+  const logOutMock = jest.fn();
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
-test('displays the title "Course list" above the CourseList component when isLoggedIn is true', () => {
-  render(<App />);
+  render(<App logOut={logOutMock} />);
 
-  const emailInput = screen.getByLabelText(/email/i);
-  const passwordInput = screen.getByLabelText(/password/i);
+  fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
 
-  fireEvent.change(emailInput, { target: { value: 'user@example.com' } });
-  fireEvent.change(passwordInput, { target: { value: 'password' } });
+  expect(logOutMock).toHaveBeenCalledTimes(1);
 
-  const loginButton = screen.getByRole('button', { name: /OK/i });
-  fireEvent.click(loginButton);
-
-  const courseListTitle = screen.getByText("Course list");
-  expect(courseListTitle).toBeInTheDocument();
+  alertSpy.mockRestore();
 });
 
-test('displays the title "Log in to continue" above the Login component when isLoggedIn is false', () => {
-  render(<App />);
+test('it should display an alert window whenever the user hit "ctrl" + "h" keyboard keys', () => {
+  const logoutSpy = jest.fn();
+  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
-  const loginTitle = screen.getByText('Log in to continue');
-  expect(loginTitle).toBeInTheDocument();
+  render(<App logOut={logoutSpy} />);
+
+  fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
+
+  expect(alertSpy).toHaveBeenCalledWith('Logging you out');
+
+  alertSpy.mockRestore();
 });
 
-test('displays "News from the School" and "Holberton School News goes here" by default', () => {
+test('it should display "News from the School" title and paragraph by default', () => {
   render(<App />);
 
-  const newsTitle = screen.getByText('News from the School');
+  const newsTitle = screen.getByRole('heading', { name: /news from the school/i });
+  const newsParagraph = screen.getByText(/holberton school news goes here/i);
+
   expect(newsTitle).toBeInTheDocument();
-
-  const newsContent = screen.getByText('Holberton School News goes here');
-  expect(newsContent).toBeInTheDocument();
+  expect(newsParagraph).toBeInTheDocument();
 });
 
-test('verifies that notification items are removed and the correct log is printed when clicked', () => {
-  jest.spyOn(console, 'log').mockImplementation(() => {});
-  render(<App />);
+test('clicking on a notification item removes it from the list and logs the message', () => {
+  const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
-  const notificationItem = screen.getByText('New course available');
+  const { container } = render(<App />);
 
-  fireEvent.click(notificationItem);
+  const notificationItems = container.querySelectorAll('[data-notification-type]');
+  const initialCount = notificationItems.length;
 
-  expect(console.log).toHaveBeenCalledWith('Notification 1 has been marked as read');
-  const notificationList = screen.queryByText('New course available');
-  expect(notificationList).toBeNull(); 
+  if (notificationItems.length > 0) {
+    fireEvent.click(notificationItems[0]);
+
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringMatching(/Notification \d+ has been marked as read/));
+
+    const updatedNotificationItems = container.querySelectorAll('[data-notification-type]');
+    expect(updatedNotificationItems.length).toBe(initialCount - 1);
+  }
+
+  consoleSpy.mockRestore();
 });

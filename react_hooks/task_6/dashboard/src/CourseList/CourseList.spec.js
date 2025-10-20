@@ -1,40 +1,32 @@
-import React from 'react';
-import axios from 'axios';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import App from '../App/App';
+import { render, screen } from '@testing-library/react';
+import CourseList from './CourseList';
 
 
-describe('CourseList Component', () => {
-  jest.mock('axios');
+test('it should render the CourseList component with 5 rows', () => {
+  const props = {
+    courses : [
+      { id:1, name:'ES6', credit:60 },
+      { id:2, name:'Webpack', credit:20 },
+      { id:3, name:'React', credit:40 }
+    ]
+  }
+  render(<CourseList {...props} />)
 
-  test('renders 5 different rows when user is logged in', async () => {
+  const rowElements = screen.getAllByRole('row');
 
-    axios.get.mockResolvedValueOnce({
-      data: {
-        courses: [
-          { id: 1, name: 'ES6', credit: 60 },
-          { id: 2, name: 'Webpack', credit: 20 },
-          { id: 3, name: 'React', credit: 40 },
-        ],
-      },
-    });
-  
-    render(<App />);
-  
-    // Simulate login
-    const emailInput = screen.getByLabelText(/Email/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /ok/i });
-  
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(loginButton);
-  
-    // // Wait for courses to be fetched and rendered
-    // await waitFor(() => screen.getByText('ES6')); // Wait for course data to be rendered
-  
-    // Check if the course list is displayed with the correct number of rows
-    const rows = screen.getAllByRole('row');
-    expect(rows).toHaveLength(5); // 2 header rows and 3 course rows
-});
+  expect(rowElements).toHaveLength(5)
+})
+
+test('it should render the CourseList component with 1 row', () => {
+  const props = {
+    courses : []
+  }
+
+  render(<CourseList {...props} />)
+
+  const rowElement = screen.getAllByRole('row');
+  const rowText = screen.getByText(/No course available yet/i);
+
+  expect(rowElement).toHaveLength(1)
+  expect(rowText).toBeInTheDocument()
 });

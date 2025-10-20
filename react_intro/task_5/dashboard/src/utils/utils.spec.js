@@ -1,33 +1,31 @@
-import { getCurrentYear, getFooterCopy, getLatestNotification } from "./utils";
-import { expect, describe, it } from '@jest/globals';
+import { getCurrentYear, getFooterCopy, getLatestNotification } from './utils';
 
-describe('Test utils.js', () => {
-  describe('getCurrentYear()', () => {
-    it('Should return current year', () => {
-      const expectValue = new Date().getFullYear();
-      const funcValue = getCurrentYear();
-      expect(funcValue).toEqual(expectValue);
-    });
+describe('getCurrentYear', () => {
+  it('returns the current year', () => {
+    const currentYear = new Date().getFullYear();
+    expect(getCurrentYear()).toBe(currentYear);
+  });
+});
+
+describe('getFooterCopy', () => {
+  it('returns the footer copy for the index page', () => {
+    const isIndex = true;
+    const footerCopy = getFooterCopy(isIndex);
+    expect(footerCopy).toBe('Holberton School');
   });
 
-  describe('getFooterCopy()', () => {
-    it('Should return "Holberton School" when true', () => {
-      const expectValue = "Holberton School";
-      const funcValue = getFooterCopy(true)
-      expect(funcValue).toEqual(expectValue);
-    });
-    it('Should return "Holberton School main dashboard" when false', () => {
-      const expectValue = "Holberton School main dashboard";
-      const funcValue = getFooterCopy(false)
-      expect(funcValue).toEqual(expectValue);
-    });
+  it('returns the footer copy for non-index pages', () => {
+    const isIndex = false;
+    const footerCopy = getFooterCopy(isIndex);
+    expect(footerCopy).toBe('Holberton School main dashboard');
   });
+});
 
-  describe('getLatestNotification()', () => {
-    it('Should return the correct value', () => {
-      const expectValue = '<strong>Urgent requirement</strong> - complete by EOD';
-      const funcValue = getLatestNotification(false)
-      expect(funcValue).toEqual(expectValue);
-    });
+describe('getLatestNotification', () => {
+  it('returns the latest notification', () => {
+    const latestNotification = getLatestNotification();
+    expect(latestNotification).toBe(
+      '<strong>Urgent requirement</strong> - complete by EOD'
+    );
   });
 });

@@ -1,7 +1,25 @@
-.App-login {
-    margin: 20px;
+.App-body {
+    display: flex;
+    flex-direction: column;
+    border-top: 3px #e0454b solid;
+    border-bottom: 3px #e0454b solid;
+    height: 50vh;
+    padding: 30px;
 }
 
-.App-login input {
-    margin: 0px 10px 0px 10px;
+
+.App-body .form {
+    margin: 20px 0;
+}
+  
+.App-body .form label{
+    padding-right: 10px;
+}
+  
+#email, #password {
+    margin-right: 10px
+}
+
+.form button {
+    cursor: pointer;
 }

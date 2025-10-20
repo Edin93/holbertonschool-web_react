@@ -1,30 +1,32 @@
-import React from 'react';
-import { css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite';
 
-function CourseListRow({ isHeader, textFirstCell, textSecondCell, style }) {
-  if (isHeader) {
-    if (textSecondCell === null || textSecondCell === undefined) {
-      return (
-        <tr>
-          <th className={css(style)} colSpan="2">{textFirstCell}</th>
-        </tr>
-      );
-    } else {
-      return (
-        <tr>
-          <th className={css(style)}>{textFirstCell}</th>
-          <th className={css(style)}>{textSecondCell}</th>
-        </tr>
-      );
-    }
-  } else {
-    return (
-      <tr>
-        <td className={css(style)}>{textFirstCell}</td>
-        <td className={css(style)}>{textSecondCell}</td>
-      </tr>
-    );
+const styles = StyleSheet.create({
+  headerRow: {
+    backgroundColor: '#deb5b545'
+  },
+  row: {
+    backgroundColor: '#f5f5f5ab'
   }
-}
+});
 
-export default CourseListRow;
+export default function CourseListRow({
+  isHeader = false,
+  textFirstCell = '',
+  textSecondCell = null
+}) {
+  const rowStyle = isHeader ? styles.headerRow : styles.row;
+
+  return (
+    isHeader ? (
+      <tr className={css(rowStyle)}>
+        <th colSpan={textSecondCell ? 1 : 2}>{textFirstCell}</th>
+        {textSecondCell ? <th>{textSecondCell}</th> : null}
+      </tr>
+    ) : (
+      <tr className={css(rowStyle)}>
+        <td>{textFirstCell}</td>
+        <td>{textSecondCell}</td>
+      </tr>
+    )
+  )
+}
