@@ -1,10 +1,13 @@
-export default function CourseListRow({ 
-  isHeader = false, 
-  textFirstCell = '', 
-  textSecondCell = null 
+export default function CourseListRow({
+  isHeader = false,
+  textFirstCell = '',
+  textSecondCell = null
 }) {
   return (
-    <tr className={isHeader ? "bg-(--color-table-header)/45" : "bg-(--color-table-rows)/45"}>
+    <tr className={isHeader
+      ? "bg-[color-mix(in_srgb,var(--color-table-header)_66%,transparent)]"
+      : "bg-[color-mix(in_srgb,var(--color-table-rows)_45%,transparent)]"
+    }>
       {isHeader ? (
         <>
           <th className="border border-gray-400" colSpan={textSecondCell ? 1 : 2}>{textFirstCell}</th>
