@@ -3,53 +3,47 @@ import axios from 'axios';
 import { logout } from '../auth/authSlice';
 
 const initialState = {
-    courses: [],
+  courses: [],
 };
 
 const API_BASE_URL = 'http://localhost:5173';
 const ENDPOINTS = {
-    courses: `${API_BASE_URL}/courses.json`,
+  courses: `${API_BASE_URL}/courses.json`,
 };
 
 export const fetchCourses = createAsyncThunk(
-    'courses/fetchCourses',
-    async () => {
-        const response = await axios.get(ENDPOINTS.courses);
-        return response.data.courses;
-    }
+  'courses/fetchCourses',
+  async () => {
+    const response = await axios.get(ENDPOINTS.courses);
+    return response.data.courses;
+  }
 );
 
 const coursesSlice = createSlice({
-    name: 'courses',
-    initialState,
-    reducers: {
-        selectCourse: (state, action) => {
-            const courseId = action.payload;
-            const course = state.courses.find(course => course.id === courseId);
-            if (course) {
-                course.isSelected = true;
-            }
-        },
-        unSelectCourse: (state, action) => {
-            const courseId = action.payload;
-            const course = state.courses.find(course => course.id === courseId);
-            if (course) {
-                course.isSelected = false;
-            }
-        },
+  name: 'courses',
+  initialState,
+  reducers: {
+    selectCourse: (state, { payload }) => {
+      const course = state.courses.find(c => c.id === payload);
+      if (course) course.isSelected = true;
     },
-    extraReducers: (builder) => {
-        builder
-        .addCase(fetchCourses.fulfilled, (state, action) => {
-            state.courses = action.payload.map(course => ({
-                ...course,
-                isSelected: false,
-            }));
-        })
-        .addCase(logout, (state) => {
-            state.courses = initialState.courses;
-        });
-    },
+    unSelectCourse: (state, { payload }) => {
+      const course = state.courses.find(c => c.id === payload);
+      if (course) course.isSelected = false;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCourses.fulfilled, (state, action) => {
+        state.courses = action.payload.map((course) => ({
+          ...course,
+          isSelected: false,
+        }));
+      })
+      .addCase(logout, (state) => {
+        state.courses = initialState.courses;
+      });
+  },
 });
 
 export const { selectCourse, unSelectCourse } = coursesSlice.actions;
