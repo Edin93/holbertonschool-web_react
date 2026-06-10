@@ -36,7 +36,7 @@ export default function CourseList({ courses = [] }) {
             <thead>
               <CourseListRow 
                 isHeader={true} 
-                textFirstCell="No course available yet"
+                textFirstCell="NO course available yet"
               />
             </thead>
           </table>
